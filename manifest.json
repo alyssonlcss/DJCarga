@@ -1,0 +1,20 @@
+{
+  "name": "DJ Carga - Dimensionamento Elétrico",
+  "short_name": "DJ Carga",
+  "description": "Calculadora normativa de disjuntores, cabos e limites de carga elétrica para redes aéreas e subterrâneas.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0056b3",
+  "theme_color": "#0056b3",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
+

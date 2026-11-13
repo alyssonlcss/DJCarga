@@ -1,0 +1,332 @@
+:root {
+  --primary: #0056b3;
+  --primary-hover: #004494;
+  --secondary: #f4f7f6;
+  --text-dark: #333333;
+  --border: #cccccc;
+  --card-bg: #ffffff;
+  --warning-bg: #fff3cd;
+  --warning-border: #ffc107;
+  --result-bg: #eef5ff;
+  --result-border: #cce0ff;
+  --error-bg: #f8d7da;
+  --error-border: #f5c2c7;
+  --error-text: #842029;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--secondary);
+  color: var(--text-dark);
+  margin: 0;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+}
+
+.container {
+  background: var(--card-bg);
+  max-width: 500px;
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  margin-top: 10px;
+  margin-bottom: 25px;
+}
+
+.header {
+  background-color: var(--primary);
+  color: #ffffff;
+  padding: 22px 20px;
+  text-align: center;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.45rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.tabs {
+  display: flex;
+  background: #e9ecef;
+  border-bottom: 2px solid var(--primary);
+}
+
+.tab-button {
+  flex: 1;
+  padding: 15px 10px;
+  border: none;
+  background: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #666666;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.tab-button:hover {
+  background: #d3d9df;
+}
+
+.tab-button.active {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.tab-content {
+  display: none;
+  padding: 25px 20px;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.form-group {
+  flex: 1;
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #444444;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: #fafafa;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  font-family: inherit;
+}
+
+input:focus,
+select:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.2);
+  background-color: #ffffff;
+}
+
+.converter-box {
+  background: var(--warning-bg);
+  border-left: 4px solid var(--warning-border);
+  padding: 12px 15px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+}
+
+.converter-box span {
+  font-weight: 700;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.result-box {
+  margin-top: 25px;
+  padding: 20px;
+  background: var(--result-bg);
+  border-radius: 8px;
+  text-align: center;
+  border: 1px solid var(--result-border);
+  transition: all 0.3s ease;
+}
+
+.result-box.error {
+  background: var(--error-bg);
+  border-color: var(--error-border);
+  color: var(--error-text);
+}
+
+.result-box h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.1rem;
+  color: var(--primary);
+}
+
+.result-box.error h3 {
+  color: var(--error-text);
+}
+
+.main-result {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin: 0;
+  color: #111111;
+  word-break: break-word;
+}
+
+.sub-results {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-around;
+  background: #ffffff;
+  padding: 12px;
+  border-radius: 6px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.sub-results div {
+  text-align: center;
+}
+
+.sub-results span {
+  display: block;
+  font-size: 0.8rem;
+  color: #666666;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.sub-results strong {
+  font-size: 1.1rem;
+  color: var(--primary);
+}
+
+.footer-note {
+  font-size: 0.9rem;
+  color: #777777;
+  text-align: center;
+  margin: 0 20px;
+  padding: 20px 0 25px 0;
+  border-top: 1px solid #e0e0e0;
+}
+
+.author {
+  color: #555555;
+  display: block;
+  line-height: 1.6;
+}
+
+.author a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.2s ease;
+}
+
+.author a:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
+}
+
+/* Modal de Instalação PWA */
+.install-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease;
+  padding: 15px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.install-content {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 360px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.install-content h3 {
+  margin-top: 0;
+  color: var(--primary);
+  font-size: 1.3rem;
+}
+
+.install-content p {
+  font-size: 0.95rem;
+  color: #555555;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.install-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.btn-install,
+.btn-cancel {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease;
+}
+
+.btn-install {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.btn-install:hover {
+  background: var(--primary-hover);
+}
+
+.btn-cancel {
+  background: #e0e0e0;
+  color: #333333;
+}
+
+.btn-cancel:hover {
+  background: #d4d4d4;
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 8px;
+  }
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
