@@ -3,7 +3,7 @@
 [![Licença: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Vercel Status](https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel)](https://vercel.com)
 [![PWA Ready](https://img.shields.io/badge/PWA-Offline%20Ready-success?logo=pwa)](https://developer.mozilla.org/pt-BR/docs/Web/Progressive_web_apps)
-[![Versão](https://img.shields.io/badge/versão-1.0.0-informational.svg)](https://github.com/alyssonlcss/DJCarga)
+[![Versão](https://img.shields.io/badge/versão-1.1.0-informational.svg)](https://github.com/alyssonlcss/DJCarga)
 
 O **DJ Carga** é uma aplicação web progressiva (PWA) desenvolvida para eletricistas, engenheiros, técnicos e projetistas realizarem o dimensionamento rápido, normativo e preciso de disjuntores de entrada e condutores (cobre e alumínio) conforme os limites de carga em redes aéreas e subterrâneas.
 
@@ -17,11 +17,13 @@ Construído sob a filosofia **Offline-First**, o aplicativo funciona sem conexã
   - Informe a potência em kW ou use o conversor rápido de Watts para kW.
   - Selecione o tipo de rede (**Aérea** ou **Subterrânea**) e tipo de ligação (**Monofásica**, **Bifásica** ou **Trifásica**).
   - Obtenha instantaneamente o disjuntor recomendado (A) e as bitolas normativas para condutores de **Cobre (Cu)** e **Alumínio (AL)**.
-  - Alertas automáticos caso a potência ultrapasse o limite normativo para a ligação escolhida.
+  - **Indicador Dinâmico de Faixa:** Exibe em tempo real o intervalo normativo permitido para a combinação selecionada.
+  - **Tratamento Inteligente de Limites (v1.1.0):** Diagnóstico detalhado e educativo com recomendação automática de migração de ligação (ex: monofásico para bifásico/trifásico), migração de rede (aérea até 75 kW para subterrânea até 100 kW) ou indicação de atendimento obrigatório em Média Tensão para cargas > 100 kW.
 
 - ⚡ **Descobrir Carga por Disjuntor**:
   - Informe a corrente nominal do disjuntor (A).
-  - Consulte a faixa de carga permitida e os cabos correspondentes para a configuração selecionada.
+  - Consulte a faixa de carga permitida e os condutores correspondentes.
+  - Validação de disjuntores homologados para a rede (alerta para disjuntores como 125A restritos a subterrânea, limites para medição indireta e lista de disjuntores padronizados).
 
 - 📱 **PWA e Suporte 100% Offline**:
   - Service Worker integrado com cache inteligente (`sw.js`).

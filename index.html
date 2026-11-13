@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>DJ Carga - v1.0.0</title>
+    <title>DJ Carga - v1.1.0</title>
     
     <!-- Metadados PWA e Mobile -->
     <meta name="theme-color" content="#0056b3">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="description" content="Calculadora de dimensionamento de disjuntores e condutores conforme normas elétricas.">
+    <meta name="description" content="Calculadora de dimensionamento de disjuntores e condutores conforme normas elétricas de rede aérea e subterrânea.">
     
     <!-- Ícone e Manifesto -->
     <link rel="icon" type="image/svg+xml" href="icon.svg">
@@ -26,7 +26,7 @@
 
 <div class="container">
     <header class="header">
-        <h1>⚡ DJ Carga v1.0.0</h1>
+        <h1>⚡ DJ Carga v1.1.0</h1>
     </header>
 
     <nav class="tabs" aria-label="Abas de Cálculo">
@@ -65,9 +65,16 @@
                 </div>
             </div>
 
+            <!-- Faixa Normativa da Configuração Atual -->
+            <div class="limits-info" id="limitsInfo1">
+                <span>⚡ Limite da Categoria:</span>
+                <strong id="limitText1">0 < C ≤ 10,0 kW</strong>
+            </div>
+
             <div id="resultadoBox1" class="result-box" aria-live="polite">
                 <h3>Disjuntor Recomendado</h3>
                 <p id="mainRes1" class="main-result">---</p>
+                <p id="errorDetail1" class="error-detail" style="display: none;"></p>
                 <div class="sub-results" id="subRes1" style="display: none;">
                     <div>
                         <span>Cobre (Cu)</span>
@@ -106,9 +113,16 @@
                 </div>
             </div>
 
+            <!-- Disjuntores Padronizados da Configuração Atual -->
+            <div class="limits-info" id="limitsInfo2">
+                <span>⚡ Disjuntores Padronizados:</span>
+                <strong id="limitText2">20A, 32A, 40A</strong>
+            </div>
+
             <div id="resultadoBox2" class="result-box" aria-live="polite">
                 <h3>Intervalo de Carga (kW)</h3>
                 <p id="mainRes2" class="main-result">---</p>
+                <p id="errorDetail2" class="error-detail" style="display: none;"></p>
                 <div class="sub-results" id="subRes2" style="display: none;">
                     <div>
                         <span>Cobre (Cu)</span>

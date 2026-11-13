@@ -1,9 +1,9 @@
 /**
  * Service Worker - DJ Carga
- * Versão 1.0.1 - Suporte Offline Completo
+ * Versão 1.1.0 - Suporte Offline Completo com Tratamento de Limites
  */
 
-const CACHE_NAME = 'djcarga-v1.0.1';
+const CACHE_NAME = 'djcarga-v1.1.0';
 
 const STATIC_ASSETS = [
   '/',

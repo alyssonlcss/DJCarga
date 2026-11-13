@@ -97,7 +97,7 @@ body {
 .form-row {
   display: flex;
   gap: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 .form-group {
@@ -142,14 +142,42 @@ select:focus {
   font-size: 0.9rem;
 }
 
-.converter-box span {
+.converter-box label {
   font-weight: 700;
   display: block;
   margin-bottom: 6px;
+  color: #664d03;
+}
+
+/* Informações dinâmicas de limites */
+.limits-info {
+  background-color: #f1f5f9;
+  border-left: 4px solid var(--primary);
+  padding: 9px 12px;
+  border-radius: 5px;
+  font-size: 0.85rem;
+  margin-top: -2px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.limits-info span {
+  color: #475569;
+  font-weight: 600;
+}
+
+.limits-info strong {
+  color: var(--primary);
+  font-size: 0.9rem;
 }
 
 .result-box {
-  margin-top: 25px;
+  margin-top: 20px;
   padding: 20px;
   background: var(--result-bg);
   border-radius: 8px;
@@ -180,6 +208,25 @@ select:focus {
   margin: 0;
   color: #111111;
   word-break: break-word;
+}
+
+.result-box.error .main-result {
+  color: var(--error-text);
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.error-detail {
+  font-size: 0.92rem;
+  margin-top: 10px;
+  margin-bottom: 0;
+  line-height: 1.5;
+  color: #58151c;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-align: left;
+  border: 1px solid rgba(132, 32, 41, 0.15);
 }
 
 .sub-results {
@@ -329,4 +376,3 @@ select:focus {
     gap: 0;
   }
 }
-
