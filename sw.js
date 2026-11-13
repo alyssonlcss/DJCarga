@@ -1,16 +1,17 @@
 /**
  * Service Worker - DJ Carga
- * Versão 1.1.0 - Suporte Offline Completo com Tratamento de Limites
+ * Versão 1.1.1 - Suporte Offline Completo com Licença e Rodapé
  */
 
-const CACHE_NAME = 'djcarga-v1.1.0';
+const CACHE_NAME = 'djcarga-v1.1.1';
 
 const STATIC_ASSETS = [
   '/',
   '/style.css',
   '/app.js',
   '/manifest.json',
-  '/icon.svg'
+  '/icon.svg',
+  '/LICENSE'
 ];
 
 // Instalação do Service Worker e pré-cache dos arquivos essenciais
