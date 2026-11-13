@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DJ Carga - v1.0.0</title>
+    
+    <meta name="theme-color" content="#0056b3">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+
+    <style>
+        :root { --primary: #0056b3; --primary-hover: #004494; --secondary: #f4f7f6; --text-dark: #333; --border: #ccc; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--secondary); color: var(--text-dark); margin: 0; padding: 15px; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; }
+        .container { background: #fff; max-width: 500px; width: 100%; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); overflow: hidden; margin-top: 10px; margin-bottom: 20px; }
+        .header { background-color: var(--primary); color: #fff; padding: 20px; text-align: center; }
+        .header h1 { margin: 0; font-size: 1.4rem; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .tabs { display: flex; background: #e9ecef; border-bottom: 2px solid var(--primary); }
+        .tab-button { flex: 1; padding: 15px 10px; border: none; background: none; font-size: 0.95rem; font-weight: 600; color: #666; cursor: pointer; transition: 0.2s; }
+        .tab-button:hover { background: #d3d9df; }
+        .tab-button.active { background: var(--primary); color: #fff; }
+        .tab-content { display: none; padding: 25px 20px; }
+        .tab-content.active { display: block; }
+        .form-row { display: flex; gap: 15px; margin-bottom: 15px; }
+        .form-group { flex: 1; margin-bottom: 15px; }
+        label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.9rem; color: #444; }
+        input, select { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 6px; box-sizing: border-box; font-size: 1rem; background-color: #fafafa; transition: 0.3s; }
+        input:focus, select:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 5px rgba(0, 86, 179, 0.2); }
+        .converter-box { background: #fff3cd; border-left: 4px solid #ffc107; padding: 10px 15px; border-radius: 4px; margin-bottom: 20px; font-size: 0.9rem; }
+        .converter-box span { font-weight: bold; display: block; margin-bottom: 5px; }
+        .result-box { margin-top: 25px; padding: 20px; background: #eef5ff; border-radius: 8px; text-align: center; border: 1px solid #cce0ff; }
+        .result-box.error { background: #f8d7da; border-color: #f5c2c7; color: #842029; }
+        .result-box h3 { margin: 0 0 10px 0; font-size: 1.1rem; color: var(--primary); }
+        .result-box.error h3 { color: #842029; }
+        .main-result { font-size: 2.2rem; font-weight: 800; margin: 0; color: #111; }
+        .sub-results { margin-top: 15px; display: flex; justify-content: space-around; background: #fff; padding: 10px; border-radius: 6px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); }
+        .sub-results div { text-align: center; }
+        .sub-results span { display: block; font-size: 0.8rem; color: #666; text-transform: uppercase; }
+        .sub-results strong { font-size: 1.1rem; color: var(--primary); }
+        .footer-note { font-size: 0.9rem; color: #777; text-align: center; margin: 0 20px; padding: 20px 0 25px 0; border-top: 1px solid #e0e0e0; }
+        .author { color: #555; display: block; line-height: 1.6; }
+        .author a { color: var(--primary); text-decoration: none; font-weight: bold; transition: 0.2s; }
+        .author a:hover { color: var(--primary-hover); text-decoration: underline; }
+        .install-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .install-content { background: white; padding: 25px; border-radius: 12px; width: 85%; max-width: 350px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+        .install-content h3 { margin-top: 0; color: var(--primary); font-size: 1.3rem; }
+        .install-content p { font-size: 0.95rem; color: #555; margin-bottom: 20px; line-height: 1.5; }
+        .install-buttons { display: flex; gap: 10px; justify-content: center; }
+        .btn-install, .btn-cancel { padding: 12px 20px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; width: 100%; font-size: 0.95rem; }
+        .btn-install { background: var(--primary); color: white; }
+        .btn-install:hover { background: var(--primary-hover); }
+        .btn-cancel { background: #e0e0e0; color: #333; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header"><h1>⚡ DJ Carga v1.0.0</h1></div>
+    <div class="tabs">
+        <button class="tab-button active" onclick="openTab('aba1', this)">Descobrir Disjuntor</button>
+        <button class="tab-button" onclick="openTab('aba2', this)">Descobrir Carga</button>
+    </div>
+
+    <div id="aba1" class="tab-content active">
+        <div class="converter-box">
+            <span>Conversor Rápido:</span>
+            <input type="number" id="cargaW" placeholder="Digite em Watts (ex: 35500)" oninput="converterWattsParaKw()">
+        </div>
+        <div class="form-group">
+            <label for="cargaKw">Potência Total em kW</label>
+            <input type="text" id="cargaKw" inputmode="decimal" placeholder="Ex: 15,5" oninput="calcularAba1()">
+        </div>
+        <div class="form-row">
+            <div class="form-group"><label for="rede1">Tipo de Rede</label><select id="rede1" onchange="calcularAba1()"><option value="aerea">Aérea</option><option value="subterranea">Subterrânea</option></select></div>
+            <div class="form-group"><label for="ligacao1">Ligação</label><select id="ligacao1" onchange="calcularAba1()"><option value="monofasica">Monofásica</option><option value="bifasica">Bifásica</option><option value="trifasica">Trifásica</option></select></div>
+        </div>
+        <div id="resultadoBox1" class="result-box">
+            <h3>Disjuntor Recomendado</h3>
+            <p id="mainRes1" class="main-result">---</p>
+            <div class="sub-results" id="subRes1" style="display: none;">
+                <div><span>Cobre (Cu)</span><strong id="caboCu1">--</strong></div>
+                <div><span>Alumínio (AL)</span><strong id="caboAl1">--</strong></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="aba2" class="tab-content">
+        <div class="form-group">
+            <label for="disjuntorA">Disjuntor (A)</label>
+            <input type="number" id="disjuntorA" placeholder="Ex: 50" oninput="calcularAba2()">
+        </div>
+        <div class="form-row">
+            <div class="form-group"><label for="rede2">Tipo de Rede</label><select id="rede2" onchange="calcularAba2()"><option value="aerea">Aérea</option><option value="subterranea">Subterrânea</option></select></div>
+            <div class="form-group"><label for="ligacao2">Ligação</label><select id="ligacao2" onchange="calcularAba2()"><option value="monofasica">Monofásica</option><option value="bifasica">Bifásica</option><option value="trifasica">Trifásica</option></select></div>
+        </div>
+        <div id="resultadoBox2" class="result-box">
+            <h3>Intervalo de Carga (kW)</h3>
+            <p id="mainRes2" class="main-result">---</p>
+            <div class="sub-results" id="subRes2" style="display: none;">
+                <div><span>Cobre (Cu)</span><strong id="caboCu2">--</strong></div>
+                <div><span>Alumínio (AL)</span><strong id="caboAl2">--</strong></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer-note">
+        <span class="author">Desenvolvido por <a href="https://www.linkedin.com/in/alyssonpinheiro/" target="_blank">Alysson Pinheiro</a><br>Analista de Dados</span>
+    </div>
+</div>
+
+<div id="installModal" class="install-modal">
+    <div class="install-content">
+        <h3>⚡ Instalar DJ Carga</h3>
+        <p>Deseja adicionar este aplicativo à tela inicial do seu celular para usar offline a qualquer momento?</p>
+        <div class="install-buttons">
+            <button id="btnCancelInstall" class="btn-cancel">Agora não</button>
+            <button id="btnInstall" class="btn-install">Instalar App</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const regras = [
+        { rede: 'aerea', ligacao: 'monofasica', min: 0, max: 5.0, disjuntor: 20, cu: '4+4 mm²', al: '6+6 mm²', int: '0 < C ≤ 5,0' },
+        { rede: 'aerea', ligacao: 'monofasica', min: 5.0, max: 8.0, disjuntor: 32, cu: '4+4 mm²', al: '6+6 mm²', int: '5,1 < C ≤ 8,0' },
+        { rede: 'aerea', ligacao: 'monofasica', min: 8.0, max: 10.0, disjuntor: 40, cu: '6+6 mm²', al: '10+10 mm²', int: '8,1 < C ≤ 10,0' },
+        { rede: 'aerea', ligacao: 'bifasica', min: 10.0, max: 20.0, disjuntor: 50, cu: '2x10+10 mm²', al: '2x16+16 mm²', int: '10,1 < C ≤ 20,0' },
+        { rede: 'aerea', ligacao: 'trifasica', min: 10.0, max: 19.0, disjuntor: 25, cu: '3x6+6 mm²', al: '3x6+6 mm²', int: '10,1 < C ≤ 19,0' },
+        { rede: 'aerea', ligacao: 'trifasica', min: 19.0, max: 21.0, disjuntor: 32, cu: '3x6+6 mm²', al: '3x10+10 mm²', int: '19,1 < C ≤ 21,0' },
+        { rede: 'aerea', ligacao: 'trifasica', min: 21.0, max: 30.0, disjuntor: 40, cu: '3x10+10 mm²', al: '3x16+16 mm²', int: '21,1 < C ≤ 30,0' },
+        { rede: 'aerea', ligacao: 'trifasica', min: 30.0, max: 37.0, disjuntor: 50, cu: '3x16+16 mm²', al: '3x25+25 mm²', int: '30,1 < C ≤ 37,0' },
+        { rede: 'aerea', ligacao: 'trifasica', min: 37.0, max: 47.0, disjuntor: 63, cu: '3x16+16 mm²', al: '3x25+25 mm²', int: '37,1 < C ≤ 47,0' },
+        { rede: 'aerea', ligacao: 'trifasica', min: 47.0, max: 60.0, disjuntor: 80, cu: '3x35+54,5 mm²', al: '3x50+50 mm²', int: '47,1 < C ≤ 60,0' },
+        { rede: 'aerea', ligacao: 'trifasica', min: 60.0, max: 75.0, disjuntor: 100, cu: '3x35+54,5 mm²', al: '3x50+50 mm²', int: '60,1 < C ≤ 75,0' },
+        { rede: 'subterranea', ligacao: 'monofasica', min: 0, max: 5.0, disjuntor: 20, cu: '10 mm²', al: '25 mm²', int: '0 < C ≤ 5,0' },
+        { rede: 'subterranea', ligacao: 'monofasica', min: 5.0, max: 8.0, disjuntor: 32, cu: '10 mm²', al: '25 mm²', int: '5,1 < C ≤ 8,0' },
+        { rede: 'subterranea', ligacao: 'monofasica', min: 8.0, max: 10.0, disjuntor: 40, cu: '10 mm²', al: '25 mm²', int: '8,1 < C ≤ 10,0' },
+        { rede: 'subterranea', ligacao: 'monofasica', min: 10.0, max: 12.5, disjuntor: 50, cu: '16 mm²', al: '25 mm²', int: '10,1 < C ≤ 12,5' },
+        { rede: 'subterranea', ligacao: 'monofasica', min: 12.5, max: 16.0, disjuntor: 63, cu: '16 mm²', al: '25 mm²', int: '12,51 < C ≤ 16,0' },
+        { rede: 'subterranea', ligacao: 'bifasica', min: 16.0, max: 20.0, disjuntor: 50, cu: '16 mm²', al: '25 mm²', int: '16,1 < C ≤ 20,0' },
+        { rede: 'subterranea', ligacao: 'trifasica', min: 16.0, max: 19.0, disjuntor: 25, cu: '16 mm²', al: '25 mm²', int: '16,1 < C ≤ 19,0' },
+        { rede: 'subterranea', ligacao: 'trifasica', min: 19.0, max: 21.0, disjuntor: 32, cu: '16 mm²', al: '25 mm²', int: '19,1 < C ≤ 21,0' },
+        { rede: 'subterranea', ligacao: 'trifasica', min: 21.0, max: 30.0, disjuntor: 40, cu: '16 mm²', al: '25 mm²', int: '21,1 < C ≤ 30,0' },
+        { rede: 'subterranea', ligacao: 'trifasica', min: 30.0, max: 37.0, disjuntor: 50, cu: '16 mm²', al: '25 mm²', int: '30,1 < C ≤ 37,0' },
+        { rede: 'subterranea', ligacao: 'trifasica', min: 37.0, max: 47.0, disjuntor: 63, cu: '16 mm²', al: '25 mm²', int: '37,1 < C ≤ 47,0' },
+        { rede: 'subterranea', ligacao: 'trifasica', min: 47.0, max: 60.0, disjuntor: 80, cu: '25 mm²', al: '35 mm²', int: '47,1 < C ≤ 60,0' },
+        { rede: 'subterranea', ligacao: 'trifasica', min: 60.0, max: 75.0, disjuntor: 100, cu: '25 mm²', al: '50 mm²', int: '60,1 < C ≤ 75,0' },
+        { rede: 'subterranea', ligacao: 'trifasica', min: 75.0, max: 100.0, disjuntor: 125, cu: '50 mm²', al: '70 mm²', int: '75,1 < C ≤ 100,0' }
+    ];
+
+    function openTab(tabId, element) {
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        element.classList.add('active');
+    }
+
+    function parseInput(val) { if (!val) return NaN; return parseFloat(val.replace(',', '.')); }
+
+    function converterWattsParaKw() {
+        const w = document.getElementById('cargaW').value;
+        if(w) { document.getElementById('cargaKw').value = (parseFloat(w) / 1000).toFixed(2).replace('.00', ''); calcularAba1(); } 
+        else { document.getElementById('cargaKw').value = ''; resetarBox1(); }
+    }
+
+    function resetarBox1() {
+        const box = document.getElementById('resultadoBox1');
+        box.classList.remove('error'); box.querySelector('h3').innerText = "Disjuntor Recomendado";
+        document.getElementById('mainRes1').innerText = "---"; document.getElementById('subRes1').style.display = "none";
+    }
+
+    function calcularAba1() {
+        const carga = parseInput(document.getElementById('cargaKw').value), rede = document.getElementById('rede1').value, ligacao = document.getElementById('ligacao1').value;
+        const box = document.getElementById('resultadoBox1'), mainRes = document.getElementById('mainRes1'), subRes = document.getElementById('subRes1');
+        if (isNaN(carga) || carga <= 0) { resetarBox1(); return; }
+        const regra = regras.find(r => r.rede === rede && r.ligacao === ligacao && carga > r.min && carga <= r.max);
+
+        if (regra) {
+            box.classList.remove('error'); box.querySelector('h3').innerText = "Disjuntor Recomendado (A)";
+            mainRes.innerText = `${regra.disjuntor} A`; document.getElementById('caboCu1').innerText = regra.cu; document.getElementById('caboAl1').innerText = regra.al; subRes.style.display = "flex";
+        } else {
+            box.classList.add('error'); box.querySelector('h3').innerText = "Fora do Limite Normativo"; subRes.style.display = "none";
+            if(ligacao === 'monofasica') { mainRes.innerText = rede === 'aerea' ? "Máx: 10 kW (Mude p/ Bifásica/Trifásica)" : "Máx: 16 kW (Mude p/ Trifásica)"; } 
+            else if (ligacao === 'bifasica') { mainRes.innerText = "Limites: 10 a 20 kW"; } 
+            else { mainRes.innerText = rede === 'aerea' ? "Máx permitido: 75 kW" : "Máx permitido: 100 kW"; }
+            mainRes.style.fontSize = "1.2rem";
+        }
+        if(regra) mainRes.style.fontSize = "2.2rem";
+    }
+
+    function calcularAba2() {
+        const disjuntor = parseInt(document.getElementById('disjuntorA').value), rede = document.getElementById('rede2').value, ligacao = document.getElementById('ligacao2').value;
+        const box = document.getElementById('resultadoBox2'), mainRes = document.getElementById('mainRes2'), subRes = document.getElementById('subRes2');
+        if (isNaN(disjuntor) || disjuntor <= 0) { box.classList.remove('error'); box.querySelector('h3').innerText = "Intervalo de Carga (kW)"; mainRes.innerText = "---"; subRes.style.display = "none"; return; }
+        const regra = regras.find(r => r.rede === rede && r.ligacao === ligacao && r.disjuntor === disjuntor);
+
+        if (regra) {
+            box.classList.remove('error'); box.querySelector('h3').innerText = "Carga Suportada (kW)"; mainRes.innerText = regra.int;
+            document.getElementById('caboCu2').innerText = regra.cu; document.getElementById('caboAl2').innerText = regra.al; subRes.style.display = "flex"; mainRes.style.fontSize = "2.2rem";
+        } else {
+            box.classList.add('error'); box.querySelector('h3').innerText = "Combinação Inexistente"; subRes.style.display = "none";
+            mainRes.innerText = "Não há padrão normativo para este disjuntor nesta configuração."; mainRes.style.fontSize = "1.2rem";
+        }
+    }
+
+    // REGISTRO DO SERVICE WORKER E MANIFEST
+    const manifest = {
+        "name": "DJ Carga", "short_name": "DJ Carga", "start_url": "./", "display": "standalone",
+        "background_color": "#0056b3", "theme_color": "#0056b3",
+        "icons": [{"src": "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>", "sizes": "192x192", "type": "image/svg+xml"}]
+    };
+    const link = document.createElement('link'); link.rel = 'manifest'; link.href = URL.createObjectURL(new Blob([JSON.stringify(manifest)], {type: 'application/json'})); document.head.appendChild(link);
+
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js').then(reg => console.log('SW registrado')).catch(err => console.log('SW Erro:', err));
+        });
+    }
+
+    let deferredPrompt;
+    const modal = document.getElementById('installModal'), btnInstall = document.getElementById('btnInstall'), btnCancel = document.getElementById('btnCancelInstall');
+    
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault(); deferredPrompt = e; modal.style.display = 'flex';
+    });
+    btnInstall.addEventListener('click', async () => {
+        modal.style.display = 'none';
+        if (deferredPrompt) { deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt = null; }
+    });
+    btnCancel.addEventListener('click', () => { modal.style.display = 'none'; });
+</script>
+</body>
+</html>
