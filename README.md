@@ -49,44 +49,6 @@ DJCarga/
 
 ---
 
-## 📊 Tabela de Padrões e Regras Normativas
-
-O algoritmo utiliza uma base de regras para dimensionamento:
-
-### 1. Rede Aérea
-| Ligação | Faixa de Potência (kW) | Disjuntor (A) | Cabo Cobre (Cu) | Cabo Alumínio (AL) |
-|---|---|:---:|:---:|:---:|
-| Monofásica | 0 a 5,0 kW | 20 A | 4+4 mm² | 6+6 mm² |
-| Monofásica | 5,1 a 8,0 kW | 32 A | 4+4 mm² | 6+6 mm² |
-| Monofásica | 8,1 a 10,0 kW | 40 A | 6+6 mm² | 10+10 mm² |
-| Bifásica | 10,1 a 20,0 kW | 50 A | 2x10+10 mm² | 2x16+16 mm² |
-| Trifásica | 10,1 a 19,0 kW | 25 A | 3x6+6 mm² | 3x6+6 mm² |
-| Trifásica | 19,1 a 21,0 kW | 32 A | 3x6+6 mm² | 3x10+10 mm² |
-| Trifásica | 21,1 a 30,0 kW | 40 A | 3x10+10 mm² | 3x16+16 mm² |
-| Trifásica | 30,1 a 37,0 kW | 50 A | 3x16+16 mm² | 3x25+25 mm² |
-| Trifásica | 37,1 a 47,0 kW | 63 A | 3x16+16 mm² | 3x25+25 mm² |
-| Trifásica | 47,1 a 60,0 kW | 80 A | 3x35+54,5 mm² | 3x50+50 mm² |
-| Trifásica | 60,1 a 75,0 kW | 100 A | 3x35+54,5 mm² | 3x50+50 mm² |
-
-### 2. Rede Subterrânea
-| Ligação | Faixa de Potência (kW) | Disjuntor (A) | Cabo Cobre (Cu) | Cabo Alumínio (AL) |
-|---|---|:---:|:---:|:---:|
-| Monofásica | 0 a 5,0 kW | 20 A | 10 mm² | 25 mm² |
-| Monofásica | 5,1 a 8,0 kW | 32 A | 10 mm² | 25 mm² |
-| Monofásica | 8,1 a 10,0 kW | 40 A | 10 mm² | 25 mm² |
-| Monofásica | 10,1 a 12,5 kW | 50 A | 16 mm² | 25 mm² |
-| Monofásica | 12,51 a 16,0 kW | 63 A | 16 mm² | 25 mm² |
-| Bifásica | 16,1 a 20,0 kW | 50 A | 16 mm² | 25 mm² |
-| Trifásica | 16,1 a 19,0 kW | 25 A | 16 mm² | 25 mm² |
-| Trifásica | 19,1 a 21,0 kW | 32 A | 16 mm² | 25 mm² |
-| Trifásica | 21,1 a 30,0 kW | 40 A | 16 mm² | 25 mm² |
-| Trifásica | 30,1 a 37,0 kW | 50 A | 16 mm² | 25 mm² |
-| Trifásica | 37,1 a 47,0 kW | 63 A | 16 mm² | 25 mm² |
-| Trifásica | 47,1 a 60,0 kW | 80 A | 25 mm² | 35 mm² |
-| Trifásica | 60,1 a 75,0 kW | 100 A | 25 mm² | 50 mm² |
-| Trifásica | 75,1 a 100,0 kW | 125 A | 50 mm² | 70 mm² |
-
----
 
 ## 🛠️ Como Executar Localmente
 
@@ -114,50 +76,6 @@ Como o projeto é composto por arquivos estáticos puros, não é necessária ne
 
 ---
 
-## 🌐 Como Fazer o Deploy no Vercel
-
-O Vercel é ideal para hospedar este projeto por oferecer HTTPS nativo gratuito (obrigatório para Service Workers e PWA).
-
-### Opção 1: Via Painel Web da Vercel (Recomendado)
-
-1. Acesse o site oficial: [vercel.com](https://vercel.com) e faça login (pode usar sua conta do GitHub).
-2. No dashboard, clique no botão **"Add New..."** e selecione **"Project"**.
-3. Na lista de repositórios do GitHub, localize e clique em **"Import"** ao lado de `DJCarga`.
-4. Na tela de configuração:
-   - **Framework Preset**: Deixe como `Other` (pois é um site estático puro).
-   - **Root Directory**: `./` (padrão).
-   - **Build and Output Settings**: Não precisa alterar nada.
-5. Clique no botão **"Deploy"**.
-6. Em poucos segundos o seu site estará publicado em uma URL como `https://djcarga.vercel.app`.
-
-> **Vantagem desta opção:** Sempre que você fizer um `git push` para o GitHub, a Vercel atualizará a versão online automaticamente!
-
----
-
-### Opção 2: Via Terminal usando Vercel CLI
-
-1. Instale a ferramenta de linha de comando da Vercel globalmente:
-   ```bash
-   npm i -g vercel
-   ```
-
-2. Dentro da pasta do projeto (`c:\Users\BR0083895903\source\DJCarga`), execute:
-   ```bash
-   vercel
-   ```
-
-3. Responda às perguntas no terminal:
-   - *Set up and deploy?* **Y** (Sim)
-   - *Which scope?* Selecione seu usuário.
-   - *Link to existing project?* **N**
-   - *What's your project's name?* **djcarga**
-   - *In which directory is your code located?* **./**
-4. Para publicar direto em produção:
-   ```bash
-   vercel --prod
-   ```
-
----
 
 ## 📄 Licença
 
