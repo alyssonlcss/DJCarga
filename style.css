@@ -258,45 +258,24 @@ select:focus {
 
 .footer-note {
   font-size: 0.85rem;
-  color: #666666;
+  color: #64748b;
   text-align: center;
   margin: 0 20px;
   padding: 18px 0 22px 0;
   border-top: 1px solid #e2e8f0;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
+  line-height: 1.6;
 }
 
-.footer-version {
-  font-weight: 700;
-  color: var(--primary);
-  font-size: 0.88rem;
-}
-
-.footer-author {
-  color: #475569;
-  line-height: 1.5;
-}
-
-.footer-author a,
-.footer-license a {
+.footer-note a {
   color: var(--primary);
   text-decoration: none;
   font-weight: 600;
   transition: color 0.2s ease;
 }
 
-.footer-author a:hover,
-.footer-license a:hover {
+.footer-note a:hover {
   color: var(--primary-hover);
   text-decoration: underline;
-}
-
-.footer-license {
-  font-size: 0.78rem;
-  color: #64748b;
-  margin-top: 2px;
 }
 
 /* Modal de Instalação PWA */
