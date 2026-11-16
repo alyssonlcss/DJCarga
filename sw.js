@@ -1,9 +1,9 @@
 /**
  * Service Worker - DJ Carga
- * Versão 1.3.0 - Seletor unificado kW/W, equivalência em tempo real e auto-correção inteligente
+ * Versão 1.3.1 - Gavetinha embutida de unidade (padrão Watts) com auto-correção
  */
 
-const CACHE_NAME = 'djcarga-v1.3.0';
+const CACHE_NAME = 'djcarga-v1.3.1';
 
 const STATIC_ASSETS = [
   '/',

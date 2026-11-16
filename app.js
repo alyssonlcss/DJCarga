@@ -105,8 +105,8 @@ function atualizarBadgeLimites2() {
   }
 }
 
-// Unidade de medida ativa na Aba 1 ('kW' ou 'W') - Solução 3
-let unidadeAtiva = 'kW';
+// Unidade de medida ativa na Aba 1 ('W' por padrão ou 'kW')
+let unidadeAtiva = 'W';
 
 // Atualização de feedback e alertas inteligentes (Soluções 1 e 2)
 function atualizarFeedbackPotencia(numDigitado) {
@@ -196,39 +196,32 @@ function atualizarFeedbackPotencia(numDigitado) {
   }
 }
 
-// Alternância de Unidade entre kW e Watts (Solução 3)
+// Alternância de Unidade entre Watts e kW através da gavetinha
 function alternarUnidade(novaUnidade) {
   if (unidadeAtiva === novaUnidade) return;
   unidadeAtiva = novaUnidade;
 
-  const btnKw = document.getElementById('unitBtnKw');
-  const btnW = document.getElementById('unitBtnW');
-  const badge = document.getElementById('unitBadge');
+  const selector = document.getElementById('unitSelector');
+  if (selector && selector.value !== novaUnidade) {
+    selector.value = novaUnidade;
+  }
+
   const input = document.getElementById('cargaKw');
+  if (!input) return;
+
+  const valAtual = parseInput(input.value);
 
   if (novaUnidade === 'kW') {
-    btnKw?.classList.add('active');
-    btnW?.classList.remove('active');
-    if (badge) badge.innerText = 'kW';
-    if (input) {
-      input.placeholder = 'Ex: 15,5';
-      const valAtual = parseInput(input.value);
-      if (!isNaN(valAtual) && valAtual > 0) {
-        const emKw = Number((valAtual / 1000).toFixed(3)).toString().replace('.', ',');
-        input.value = emKw;
-      }
+    input.placeholder = 'Ex: 15,5';
+    if (!isNaN(valAtual) && valAtual > 0) {
+      const emKw = Number((valAtual / 1000).toFixed(3)).toString().replace('.', ',');
+      input.value = emKw;
     }
   } else {
-    btnW?.classList.add('active');
-    btnKw?.classList.remove('active');
-    if (badge) badge.innerText = 'W';
-    if (input) {
-      input.placeholder = 'Ex: 15500';
-      const valAtual = parseInput(input.value);
-      if (!isNaN(valAtual) && valAtual > 0) {
-        const emW = Math.round(valAtual * 1000).toString();
-        input.value = emW;
-      }
+    input.placeholder = 'Ex: 15000';
+    if (!isNaN(valAtual) && valAtual > 0) {
+      const emW = Math.round(valAtual * 1000).toString();
+      input.value = emW;
     }
   }
 
@@ -490,11 +483,13 @@ document.addEventListener('DOMContentLoaded', () => {
   atualizarBadgeLimites1();
   atualizarBadgeLimites2();
 
-  // Alternância de unidade Aba 1 (Solução 3)
-  const btnKw = document.getElementById('unitBtnKw');
-  const btnW = document.getElementById('unitBtnW');
-  if (btnKw) btnKw.addEventListener('click', () => alternarUnidade('kW'));
-  if (btnW) btnW.addEventListener('click', () => alternarUnidade('W'));
+  // Gavetinha seletora de unidade na Aba 1 (Padrão: Watts)
+  const unitSelector = document.getElementById('unitSelector');
+  if (unitSelector) {
+    unitSelector.addEventListener('change', (e) => {
+      alternarUnidade(e.target.value);
+    });
+  }
 
   const cargaKw = document.getElementById('cargaKw');
   if (cargaKw) cargaKw.addEventListener('input', calcularAba1);
