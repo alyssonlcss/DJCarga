@@ -1,9 +1,9 @@
 /**
  * Service Worker - DJ Carga
- * Versão 1.4.0 - Selects customizados modernos com popover flutuante e gavetinha integrada
+ * Versão 1.5.0 - Responsividade mobile, botão dispensar popup e bypass de cache em desenvolvimento
  */
 
-const CACHE_NAME = 'djcarga-v1.4.0';
+const CACHE_NAME = 'djcarga-v1.5.0';
 
 const STATIC_ASSETS = [
   '/',
@@ -41,11 +41,31 @@ self.addEventListener('activate', (event) => {
   );
 });
 
+// Responde a solicitações da interface com a versão exata do CACHE_NAME
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'GET_VERSION') {
+    const match = CACHE_NAME.match(/djcarga-(v[0-9.]+)/);
+    const version = match ? match[1] : CACHE_NAME;
+    if (event.ports && event.ports[0]) {
+      event.ports[0].postMessage({ version });
+    }
+  }
+});
+
 // Interceptação de requisições
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
   const url = new URL(event.request.url);
+
+  // Em desenvolvimento local (localhost / 127.0.0.1), sempre busca da rede para refletir alterações instantaneamente
+  const isDev = url.hostname === 'localhost' || url.hostname === '127.0.0.1';
+  if (isDev) {
+    event.respondWith(
+      fetch(event.request).catch(() => caches.match(event.request))
+    );
+    return;
+  }
 
   // Se for navegação de página (abertura do app ou recarregar página)
   if (event.request.mode === 'navigate' || url.pathname === '/' || url.pathname.endsWith('/index.html')) {

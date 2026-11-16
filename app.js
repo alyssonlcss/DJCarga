@@ -666,10 +666,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('installModal');
   const btnInstall = document.getElementById('btnInstall');
   const btnCancel = document.getElementById('btnCancelInstall');
+  const btnNever = document.getElementById('btnNeverInstall');
+
+  const STORAGE_KEY_HIDE_INSTALL = 'djcarga_hide_install_prompt_v1';
 
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
+
+    // Se o usuário optou por "não mostrar mais", não exibe o modal
+    if (localStorage.getItem(STORAGE_KEY_HIDE_INSTALL) === 'true') {
+      return;
+    }
+
     if (modal) modal.style.display = 'flex';
   });
 
@@ -678,7 +687,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (modal) modal.style.display = 'none';
       if (deferredPrompt) {
         deferredPrompt.prompt();
-        await deferredPrompt.userChoice;
+        const choice = await deferredPrompt.userChoice;
+        if (choice && choice.outcome === 'accepted') {
+          localStorage.setItem(STORAGE_KEY_HIDE_INSTALL, 'true');
+        }
         deferredPrompt = null;
       }
     });
@@ -689,15 +701,69 @@ document.addEventListener('DOMContentLoaded', () => {
       modal.style.display = 'none';
     });
   }
+
+  if (btnNever && modal) {
+    btnNever.addEventListener('click', () => {
+      localStorage.setItem(STORAGE_KEY_HIDE_INSTALL, 'true');
+      modal.style.display = 'none';
+    });
+  }
+
+  window.addEventListener('appinstalled', () => {
+    localStorage.setItem(STORAGE_KEY_HIDE_INSTALL, 'true');
+    if (modal) modal.style.display = 'none';
+  });
+
+  // Sincroniza a versão exibida no rodapé diretamente do CACHE_NAME
+  sincronizarVersaoDoCache();
 });
+
+// Sincronização automática da versão do CACHE_NAME para o rodapé e título
+async function sincronizarVersaoDoCache() {
+  function aplicarVersao(versao) {
+    const el = document.getElementById('appVersion');
+    if (el) el.textContent = versao;
+    document.title = `DJ Carga - ${versao}`;
+  }
+
+  // 1. Tenta obter do Service Worker ativo via MessageChannel
+  if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+    try {
+      const channel = new MessageChannel();
+      channel.port1.onmessage = (event) => {
+        if (event.data && event.data.version) {
+          aplicarVersao(event.data.version);
+        }
+      };
+      navigator.serviceWorker.controller.postMessage({ type: 'GET_VERSION' }, [channel.port2]);
+    } catch (_) {}
+  }
+
+  // 2. Lê diretamente do sw.js para atualização instantânea mesmo sem SW ativo
+  try {
+    const resp = await fetch('/sw.js', { cache: 'no-store' });
+    if (resp.ok) {
+      const code = await resp.text();
+      const match = code.match(/CACHE_NAME\s*=\s*['"]djcarga-(v[0-9.]+)['"]/);
+      if (match && match[1]) {
+        aplicarVersao(match[1]);
+      }
+    }
+  } catch (_) {}
+}
 
 // Registro do Service Worker para suporte Offline completo
 if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    sincronizarVersaoDoCache();
+  });
+
   window.addEventListener('load', () => {
     navigator.serviceWorker
       .register('/sw.js', { scope: '/' })
       .then(reg => {
-        console.log('[DJ Carga] Service Worker v1.1.0 registrado com sucesso:', reg.scope);
+        console.log('[DJ Carga] Service Worker registrado com sucesso:', reg.scope);
+        sincronizarVersaoDoCache();
       })
       .catch(err => {
         console.error('[DJ Carga] Falha ao registrar Service Worker:', err);
