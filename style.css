@@ -214,71 +214,90 @@ select:focus {
   box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.18);
 }
 
-/* Informações dinâmicas de limites por tipo de rede e ligação */
-.network-limits {
+/* Informações dinâmicas de limites */
+.limits-info {
   background-color: #f8fafc;
   border: 1px solid var(--border-subtle);
-  border-radius: 10px;
-  padding: 10px 12px;
+  border-left: 4px solid var(--primary);
+  padding: 10px 13px;
+  border-radius: 8px;
   margin-top: 4px;
   margin-bottom: 18px;
-}
-
-.network-limits-title {
-  font-size: 0.78rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--primary);
-  margin-bottom: 7px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.network-limits-title strong {
-  color: var(--primary-dark);
-}
-
-.limits-table {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-}
-
-.limit-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.82rem;
-  padding: 6px 9px;
-  border-radius: 6px;
-  background: transparent;
-  color: var(--text-muted);
-  border: 1px solid transparent;
+  gap: 7px;
   transition: all 0.2s ease;
 }
 
-.limit-row.active {
-  background: #eff6ff;
-  border-color: #bfdbfe;
-  border-left: 3px solid var(--primary);
-  color: var(--primary-dark);
+.limits-main-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 0.84rem;
+}
+
+.limits-main-label {
+  color: var(--text-muted);
   font-weight: 600;
 }
 
-.limit-row .limit-name {
-  font-weight: 600;
-}
-
-.limit-row .limit-range {
-  font-variant-numeric: tabular-nums;
-  font-weight: 500;
-}
-
-.limit-row.active .limit-range {
-  font-weight: 700;
+.limits-main-val {
   color: var(--primary);
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.limits-sub-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  border-top: 1px dashed #e2e8f0;
+  padding-top: 6px;
+  font-size: 0.77rem;
+  color: var(--text-light);
+  flex-wrap: wrap;
+}
+
+.sub-network-name {
+  font-weight: 600;
+  color: #475569;
+}
+
+.sub-pills {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.sub-pill {
+  background: #ffffff;
+  border: 1px solid var(--border-subtle);
+  padding: 2px 7px;
+  border-radius: 5px;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  transition: all 0.2s ease;
+}
+
+.sub-pill strong {
+  font-weight: 600;
+  color: #334155;
+  font-variant-numeric: tabular-nums;
+}
+
+.sub-pill.active {
+  background: #eff6ff;
+  border-color: #93c5fd;
+  color: var(--primary-dark);
+}
+
+.sub-pill.active strong {
+  color: var(--primary);
+  font-weight: 700;
 }
 
 /* Card de Resultado */

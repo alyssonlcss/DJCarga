@@ -66,23 +66,18 @@
                 </div>
             </div>
 
-            <!-- Limites por Tipo de Ligação da Rede Selecionada -->
-            <div class="network-limits" id="networkLimits1">
-                <div class="network-limits-title">
-                    <span>⚡ Limites da Rede <strong id="lblRede1">Aérea</strong>:</span>
+            <!-- Informações dinâmicas de limites no estilo clássico refinado -->
+            <div class="limits-info" id="limitsInfo1">
+                <div class="limits-main-row">
+                    <span class="limits-main-label">⚡ Limite da Categoria:</span>
+                    <strong class="limits-main-val" id="limitText1">0 < C ≤ 10,0 kW</strong>
                 </div>
-                <div class="limits-table">
-                    <div class="limit-row active" id="rowMono1">
-                        <span class="limit-name">Monofásica:</span>
-                        <span class="limit-range" id="valMono1">0 < C ≤ 10,0 kW</span>
-                    </div>
-                    <div class="limit-row" id="rowBi1">
-                        <span class="limit-name">Bifásica:</span>
-                        <span class="limit-range" id="valBi1">10,1 < C ≤ 20,0 kW</span>
-                    </div>
-                    <div class="limit-row" id="rowTri1">
-                        <span class="limit-name">Trifásica:</span>
-                        <span class="limit-range" id="valTri1">10,1 < C ≤ 75,0 kW</span>
+                <div class="limits-sub-row">
+                    <span class="sub-network-name">Rede <span id="lblRede1">Aérea</span>:</span>
+                    <div class="sub-pills">
+                        <span class="sub-pill active" id="subMono1">Mono: <strong id="valMono1">0 a 10 kW</strong></span>
+                        <span class="sub-pill" id="subBi1">Bi: <strong id="valBi1">10,1 a 20 kW</strong></span>
+                        <span class="sub-pill" id="subTri1">Tri: <strong id="valTri1">10,1 a 75 kW</strong></span>
                     </div>
                 </div>
             </div>
@@ -129,23 +124,18 @@
                 </div>
             </div>
 
-            <!-- Disjuntores por Tipo de Ligação da Rede Selecionada -->
-            <div class="network-limits" id="networkLimits2">
-                <div class="network-limits-title">
-                    <span>⚡ Disjuntores da Rede <strong id="lblRede2">Aérea</strong>:</span>
+            <!-- Disjuntores da Configuração no estilo clássico refinado -->
+            <div class="limits-info" id="limitsInfo2">
+                <div class="limits-main-row">
+                    <span class="limits-main-label">⚡ Disjuntores da Categoria:</span>
+                    <strong class="limits-main-val" id="limitText2">20A, 32A, 40A</strong>
                 </div>
-                <div class="limits-table">
-                    <div class="limit-row active" id="rowMono2">
-                        <span class="limit-name">Monofásica:</span>
-                        <span class="limit-range" id="valMono2">20A, 32A, 40A</span>
-                    </div>
-                    <div class="limit-row" id="rowBi2">
-                        <span class="limit-name">Bifásica:</span>
-                        <span class="limit-range" id="valBi2">50A</span>
-                    </div>
-                    <div class="limit-row" id="rowTri2">
-                        <span class="limit-name">Trifásica:</span>
-                        <span class="limit-range" id="valTri2">25A a 100A</span>
+                <div class="limits-sub-row">
+                    <span class="sub-network-name">Rede <span id="lblRede2">Aérea</span>:</span>
+                    <div class="sub-pills">
+                        <span class="sub-pill active" id="subMono2">Mono: <strong id="valMono2">20 a 40A</strong></span>
+                        <span class="sub-pill" id="subBi2">Bi: <strong id="valBi2">50A</strong></span>
+                        <span class="sub-pill" id="subTri2">Tri: <strong id="valTri2">25 a 100A</strong></span>
                     </div>
                 </div>
             </div>

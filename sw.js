@@ -1,9 +1,9 @@
 /**
  * Service Worker - DJ Carga
- * Versão 1.1.5 - Limites separados por tipo de rede e ligação
+ * Versão 1.1.6 - Limite da categoria com quebra dinâmica de ligações
  */
 
-const CACHE_NAME = 'djcarga-v1.1.5';
+const CACHE_NAME = 'djcarga-v1.1.6';
 
 const STATIC_ASSETS = [
   '/',

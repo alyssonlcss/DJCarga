@@ -78,21 +78,28 @@ function atualizarBadgeLimites1() {
   const limites = LIMITES_NORMATIVOS[rede];
   if (!limites) return;
 
+  // Atualiza o Limite da Categoria selecionada
+  const limitText1 = document.getElementById('limitText1');
+  if (limitText1 && limites[ligacao]) {
+    limitText1.innerText = limites[ligacao].label;
+  }
+
+  // Atualiza os limites individuais de cada ligação
   const valMono = document.getElementById('valMono1');
   const valBi = document.getElementById('valBi1');
   const valTri = document.getElementById('valTri1');
 
-  if (valMono) valMono.innerText = limites.monofasica.label;
-  if (valBi) valBi.innerText = limites.bifasica.label;
-  if (valTri) valTri.innerText = limites.trifasica.label;
+  if (valMono) valMono.innerText = rede === 'aerea' ? '0 a 10 kW' : '0 a 16 kW';
+  if (valBi) valBi.innerText = '10,1 a 20 kW';
+  if (valTri) valTri.innerText = rede === 'aerea' ? '10,1 a 75 kW' : '16,1 a 100 kW';
 
-  const rowMono = document.getElementById('rowMono1');
-  const rowBi = document.getElementById('rowBi1');
-  const rowTri = document.getElementById('rowTri1');
+  const subMono = document.getElementById('subMono1');
+  const subBi = document.getElementById('subBi1');
+  const subTri = document.getElementById('subTri1');
 
-  rowMono?.classList.toggle('active', ligacao === 'monofasica');
-  rowBi?.classList.toggle('active', ligacao === 'bifasica');
-  rowTri?.classList.toggle('active', ligacao === 'trifasica');
+  subMono?.classList.toggle('active', ligacao === 'monofasica');
+  subBi?.classList.toggle('active', ligacao === 'bifasica');
+  subTri?.classList.toggle('active', ligacao === 'trifasica');
 }
 
 // Atualiza os disjuntores de cada tipo de rede e ligação na Aba 2
@@ -108,23 +115,28 @@ function atualizarBadgeLimites2() {
   const limites = LIMITES_NORMATIVOS[rede];
   if (!limites) return;
 
+  // Atualiza os disjuntores da Categoria selecionada
+  const limitText2 = document.getElementById('limitText2');
+  if (limitText2 && limites[ligacao]) {
+    limitText2.innerText = limites[ligacao].disjuntores.map(d => `${d}A`).join(', ');
+  }
+
+  // Atualiza os disjuntores individuais de cada ligação
   const valMono = document.getElementById('valMono2');
   const valBi = document.getElementById('valBi2');
   const valTri = document.getElementById('valTri2');
 
-  if (valMono) valMono.innerText = limites.monofasica.disjuntores.map(d => `${d}A`).join(', ');
-  if (valBi) valBi.innerText = limites.bifasica.disjuntores.map(d => `${d}A`).join(', ');
-  if (valTri) {
-    valTri.innerText = rede === 'aerea' ? '25A a 100A' : '25A a 125A';
-  }
+  if (valMono) valMono.innerText = rede === 'aerea' ? '20 a 40A' : '20 a 63A';
+  if (valBi) valBi.innerText = '50A';
+  if (valTri) valTri.innerText = rede === 'aerea' ? '25 a 100A' : '25 a 125A';
 
-  const rowMono = document.getElementById('rowMono2');
-  const rowBi = document.getElementById('rowBi2');
-  const rowTri = document.getElementById('rowTri2');
+  const subMono = document.getElementById('subMono2');
+  const subBi = document.getElementById('subBi2');
+  const subTri = document.getElementById('subTri2');
 
-  rowMono?.classList.toggle('active', ligacao === 'monofasica');
-  rowBi?.classList.toggle('active', ligacao === 'bifasica');
-  rowTri?.classList.toggle('active', ligacao === 'trifasica');
+  subMono?.classList.toggle('active', ligacao === 'monofasica');
+  subBi?.classList.toggle('active', ligacao === 'bifasica');
+  subTri?.classList.toggle('active', ligacao === 'trifasica');
 }
 
 // Conversor Watts para kW (precisão de até 3 casas decimais: 1 kW = 1.000 W)
