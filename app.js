@@ -667,31 +667,81 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnInstall = document.getElementById('btnInstall');
   const btnCancel = document.getElementById('btnCancelInstall');
   const btnNever = document.getElementById('btnNeverInstall');
+  const btnOpenInstall = document.getElementById('btnOpenInstallModal');
+  const installInstructions = document.getElementById('installInstructions');
 
   const STORAGE_KEY_HIDE_INSTALL = 'djcarga_hide_install_prompt_v1';
+
+  // Se já estiver instalado como app (standalone), oculta o botão do rodapé
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  if (isStandalone && btnOpenInstall) {
+    btnOpenInstall.style.display = 'none';
+  }
+
+  function abrirModalInstalacao() {
+    if (!modal) return;
+
+    if (deferredPrompt) {
+      if (installInstructions) installInstructions.style.display = 'none';
+      if (btnInstall) btnInstall.style.display = 'inline-block';
+    } else {
+      // Quando o evento automático do navegador está em cooldown ou em navegadores como Safari iOS
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+      const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+      if (installInstructions) {
+        if (isIOS) {
+          installInstructions.innerHTML = '📲 <strong>No iPhone / iPad:</strong><br>Toque no ícone de Compartilhar (quadrado com seta para cima) e escolha <strong>"Adicionar à Tela de Início"</strong>.';
+        } else if (isMobile) {
+          installInstructions.innerHTML = '📲 <strong>No Celular Android:</strong><br>Toque no menu de 3 pontos (⋮) no topo do navegador e selecione <strong>"Instalar aplicativo"</strong> ou <strong>"Adicionar à tela inicial"</strong>.';
+        } else {
+          installInstructions.innerHTML = '💻 <strong>No Computador:</strong><br>Clique no ícone de instalação (computador com seta para baixo) no canto direito da barra de endereços do navegador.';
+        }
+        installInstructions.style.display = 'block';
+      }
+    }
+
+    modal.style.display = 'flex';
+  }
+
+  // Abertura manual pelo botão do rodapé (reseta qualquer bloqueio prévio)
+  if (btnOpenInstall) {
+    btnOpenInstall.addEventListener('click', () => {
+      localStorage.removeItem(STORAGE_KEY_HIDE_INSTALL);
+      abrirModalInstalacao();
+    });
+  }
 
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
 
-    // Se o usuário optou por "não mostrar mais", não exibe o modal
+    // Se o usuário optou por "não mostrar mais", não exibe o modal automaticamente
     if (localStorage.getItem(STORAGE_KEY_HIDE_INSTALL) === 'true') {
       return;
     }
 
-    if (modal) modal.style.display = 'flex';
+    abrirModalInstalacao();
   });
 
   if (btnInstall) {
     btnInstall.addEventListener('click', async () => {
-      if (modal) modal.style.display = 'none';
       if (deferredPrompt) {
+        if (modal) modal.style.display = 'none';
         deferredPrompt.prompt();
         const choice = await deferredPrompt.userChoice;
         if (choice && choice.outcome === 'accepted') {
           localStorage.setItem(STORAGE_KEY_HIDE_INSTALL, 'true');
+          if (btnOpenInstall) btnOpenInstall.style.display = 'none';
         }
         deferredPrompt = null;
+      } else {
+        // Se o prompt nativo não estiver disponível, exibe as orientações de instalação
+        if (installInstructions && installInstructions.style.display === 'none') {
+          abrirModalInstalacao();
+        } else {
+          if (modal) modal.style.display = 'none';
+        }
       }
     });
   }
@@ -712,6 +762,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('appinstalled', () => {
     localStorage.setItem(STORAGE_KEY_HIDE_INSTALL, 'true');
     if (modal) modal.style.display = 'none';
+    if (btnOpenInstall) btnOpenInstall.style.display = 'none';
   });
 
   // Sincroniza a versão exibida no rodapé diretamente do CACHE_NAME
