@@ -1,9 +1,9 @@
 /**
  * Service Worker - DJ Carga
- * Versão 1.3.2 - Redesign moderno dos selects com setas SVG e acabamento refinado
+ * Versão 1.4.0 - Selects customizados modernos com popover flutuante e gavetinha integrada
  */
 
-const CACHE_NAME = 'djcarga-v1.3.2';
+const CACHE_NAME = 'djcarga-v1.4.0';
 
 const STATIC_ASSETS = [
   '/',

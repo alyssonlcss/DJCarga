@@ -205,6 +205,7 @@ function alternarUnidade(novaUnidade) {
   if (selector && selector.value !== novaUnidade) {
     selector.value = novaUnidade;
   }
+  sincronizarCustomSelect('unitSelector');
 
   const input = document.getElementById('cargaKw');
   if (!input) return;
@@ -226,6 +227,133 @@ function alternarUnidade(novaUnidade) {
   }
 
   calcularAba1();
+}
+
+// Inicialização de Selects Customizados Modernos
+function initCustomSelects() {
+  const selects = document.querySelectorAll('select');
+
+  selects.forEach(select => {
+    if (select.dataset.customized === 'true') return;
+    select.dataset.customized = 'true';
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'custom-select';
+    if (select.id === 'unitSelector') {
+      wrapper.classList.add('custom-select-drawer');
+    }
+
+    select.parentNode.insertBefore(wrapper, select);
+    wrapper.appendChild(select);
+    select.classList.add('native-select-hidden');
+
+    const trigger = document.createElement('button');
+    trigger.type = 'button';
+    trigger.className = 'custom-select-trigger';
+    trigger.setAttribute('aria-haspopup', 'listbox');
+    trigger.setAttribute('aria-expanded', 'false');
+
+    const selectedOption = select.options[select.selectedIndex] || select.options[0];
+
+    const triggerLabel = document.createElement('span');
+    triggerLabel.className = 'custom-select-label';
+    triggerLabel.textContent = selectedOption ? selectedOption.text : '';
+
+    const chevronSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    chevronSvg.setAttribute('class', 'custom-select-chevron');
+    chevronSvg.setAttribute('viewBox', '0 0 20 20');
+    chevronSvg.setAttribute('fill', 'none');
+    chevronSvg.setAttribute('stroke', 'currentColor');
+    chevronSvg.setAttribute('stroke-width', '2.2');
+    chevronSvg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M5.5 7.5l4.5 4.5 4.5-4.5"/>';
+
+    trigger.appendChild(triggerLabel);
+    trigger.appendChild(chevronSvg);
+    wrapper.appendChild(trigger);
+
+    const dropdown = document.createElement('div');
+    dropdown.className = 'custom-select-dropdown';
+    dropdown.setAttribute('role', 'listbox');
+
+    Array.from(select.options).forEach(opt => {
+      const optionItem = document.createElement('div');
+      optionItem.className = 'custom-select-option';
+      if (opt.selected) optionItem.classList.add('selected');
+      optionItem.setAttribute('role', 'option');
+      optionItem.setAttribute('data-value', opt.value);
+
+      const optionText = document.createElement('span');
+      optionText.textContent = opt.text;
+
+      const checkSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      checkSvg.setAttribute('class', 'option-check-icon');
+      checkSvg.setAttribute('viewBox', '0 0 20 20');
+      checkSvg.setAttribute('fill', 'currentColor');
+      checkSvg.innerHTML = '<path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd"/>';
+
+      optionItem.appendChild(optionText);
+      optionItem.appendChild(checkSvg);
+
+      optionItem.addEventListener('click', (e) => {
+        e.stopPropagation();
+        triggerLabel.textContent = opt.text;
+        dropdown.querySelectorAll('.custom-select-option').forEach(el => el.classList.remove('selected'));
+        optionItem.classList.add('selected');
+        select.value = opt.value;
+        select.dispatchEvent(new Event('change', { bubbles: true }));
+        fecharTodosDropdowns();
+      });
+
+      dropdown.appendChild(optionItem);
+    });
+
+    wrapper.appendChild(dropdown);
+
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = wrapper.classList.contains('open');
+      fecharTodosDropdowns();
+      if (!isOpen) {
+        wrapper.classList.add('open');
+        trigger.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  document.addEventListener('click', () => {
+    fecharTodosDropdowns();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') fecharTodosDropdowns();
+  });
+}
+
+function fecharTodosDropdowns() {
+  document.querySelectorAll('.custom-select.open').forEach(wrapper => {
+    wrapper.classList.remove('open');
+    const trigger = wrapper.querySelector('.custom-select-trigger');
+    if (trigger) trigger.setAttribute('aria-expanded', 'false');
+  });
+}
+
+function sincronizarCustomSelect(selectId) {
+  const select = document.getElementById(selectId);
+  if (!select) return;
+  const wrapper = select.closest('.custom-select');
+  if (!wrapper) return;
+  const triggerLabel = wrapper.querySelector('.custom-select-label');
+  const selectedOpt = select.options[select.selectedIndex];
+  if (triggerLabel && selectedOpt) {
+    triggerLabel.textContent = selectedOpt.text;
+  }
+  wrapper.querySelectorAll('.custom-select-option').forEach(opt => {
+    if (opt.getAttribute('data-value') === select.value) {
+      opt.classList.add('selected');
+    } else {
+      opt.classList.remove('selected');
+    }
+  });
 }
 
 // Reset do card de resultado da Aba 1
@@ -471,6 +599,9 @@ function calcularAba2() {
 
 // Inicialização dos eventos do DOM
 document.addEventListener('DOMContentLoaded', () => {
+  // Inicializa selects customizados modernos
+  initCustomSelects();
+
   // Configurar botões de abas
   document.querySelectorAll('.tab-button').forEach(btn => {
     btn.addEventListener('click', () => {

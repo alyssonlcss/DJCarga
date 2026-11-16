@@ -43,7 +43,7 @@ body {
   border-radius: 16px;
   border: 1px solid rgba(15, 23, 42, 0.08);
   box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.07), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
-  overflow: hidden;
+  position: relative;
   margin-top: 8px;
   margin-bottom: 24px;
 }
@@ -54,6 +54,7 @@ body {
   padding: 24px 22px 22px;
   text-align: center;
   position: relative;
+  border-radius: 15px 15px 0 0;
 }
 
 .header h1 {
@@ -187,41 +188,147 @@ input[type="number"]:focus {
   box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.15);
 }
 
-/* Selects Modernos Harmonizados */
-select {
+/* Selects Customizados Modernos (Substitui completamente o dropdown nativo do OS) */
+.custom-select {
+  position: relative;
   width: 100%;
-  padding: 11px 40px 11px 14px;
+}
+
+.native-select-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+  pointer-events: none !important;
+}
+
+.custom-select-trigger {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 11px 14px;
+  background-color: #ffffff;
   border: 1.5px solid var(--border-input);
   border-radius: 9px;
   font-size: 0.95rem;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-main);
-  background-color: #ffffff;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='2.2' stroke='%23475569'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5' /%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 14px center;
-  background-size: 15px 15px;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  font-family: inherit;
   box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  font-family: inherit;
+  text-align: left;
 }
 
-select:hover {
+.custom-select-trigger:hover {
   border-color: #94a3b8;
   background-color: #f8fafc;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='2.2' stroke='%230056b3'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5' /%3E%3C/svg%3E");
 }
 
-select:focus {
+.custom-select.open .custom-select-trigger,
+.custom-select-trigger:focus-visible {
   border-color: var(--primary);
   background-color: #ffffff;
   outline: none;
   box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.15);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='2.2' stroke='%230056b3'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5' /%3E%3C/svg%3E");
+}
+
+.custom-select-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.custom-select-chevron {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--text-light);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s ease;
+  margin-left: 8px;
+}
+
+.custom-select:hover .custom-select-chevron {
+  color: var(--primary);
+}
+
+.custom-select.open .custom-select-chevron {
+  transform: rotate(180deg);
+  color: var(--primary);
+}
+
+/* Dropdown Menu Flutuante */
+.custom-select-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  box-shadow: 0 12px 28px -4px rgba(15, 23, 42, 0.15), 0 4px 10px -2px rgba(15, 23, 42, 0.08);
+  padding: 5px;
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px) scale(0.98);
+  transition: opacity 0.18s ease, transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.18s;
+  pointer-events: none;
+}
+
+.custom-select.open .custom-select-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* Opções Customizadas */
+.custom-select-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.custom-select-option:hover {
+  background-color: #f1f5f9;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.custom-select-option.selected {
+  background-color: #eff6ff;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.option-check-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--primary);
+  opacity: 0;
+  transform: scale(0.6);
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+}
+
+.custom-select-option.selected .option-check-icon {
+  opacity: 1;
+  transform: scale(1);
 }
 
 /* Wrapper com Gavetinha (Select Embutido no Campo de Potência) */
@@ -233,7 +340,6 @@ select:focus {
   border-radius: 9px;
   background-color: #ffffff;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: hidden;
   box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
 }
 
@@ -249,7 +355,7 @@ select:focus {
 .input-unit-wrapper input {
   flex: 1;
   border: none !important;
-  border-radius: 0 !important;
+  border-radius: 8px 0 0 8px !important;
   box-shadow: none !important;
   background: transparent !important;
   padding: 11px 14px;
@@ -262,9 +368,10 @@ select:focus {
 .unit-drawer {
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
   border-left: 1px solid var(--border-subtle);
+  border-radius: 0 8px 8px 0;
   transition: background 0.2s ease;
 }
 
@@ -272,26 +379,34 @@ select:focus {
   background: #e2e8f0;
 }
 
-.unit-drawer select {
-  width: auto;
-  border: none !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  background-color: transparent !important;
-  padding: 10px 34px 10px 14px !important;
-  font-size: 0.88rem !important;
-  font-weight: 700 !important;
-  color: var(--primary) !important;
-  cursor: pointer;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='2.5' stroke='%230056b3'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5' /%3E%3C/svg%3E') !important;
-  background-repeat: no-repeat !important;
-  background-position: right 12px center !important;
-  background-size: 14px 14px !important;
+/* Gavetinha dentro do input */
+.custom-select-drawer {
+  height: 100%;
+  display: flex;
+  align-items: stretch;
 }
 
-.unit-drawer select:focus {
-  outline: none;
+.custom-select-drawer .custom-select-trigger {
+  border: none !important;
+  border-radius: 0 8px 8px 0 !important;
   box-shadow: none !important;
+  background: transparent !important;
+  padding: 0 14px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--primary);
+  height: 100%;
+  gap: 6px;
+}
+
+.custom-select-drawer .custom-select-trigger:hover {
+  background: rgba(0, 86, 179, 0.04) !important;
+}
+
+.custom-select-drawer .custom-select-dropdown {
+  left: auto;
+  right: 0;
+  width: 155px;
 }
 
 /* Feedback Dinâmico e Alertas (Soluções 1 e 2) */
