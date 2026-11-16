@@ -205,8 +205,8 @@ function calcularAba1() {
     }
     // 2. Cargas entre 75 kW e 100 kW em rede Aérea
     else if (rede === 'aerea' && carga > 75.0 && carga <= 100.0) {
-      mensagemPrincipal = 'Limite Máximo Aéreo Ultrapassado (75 kW)';
-      detalheOrientacao = `A rede Aérea suporta no máximo 75 kW em Baixa Tensão. Para cargas de ${cargaFormatada} kW, altere o Tipo de Rede para "Subterrânea" (atende até 100 kW no Grupo B) ou solicite atendimento no Grupo A.`;
+      mensagemPrincipal = 'Limite Aéreo Excedido (75 kW) • Requer Grupo A';
+      detalheOrientacao = `O fornecimento em rede aérea de Baixa Tensão (Grupo B) é limitado a 75 kW. Para uma carga de ${cargaFormatada} kW, o procedimento padrão é solicitar atendimento no Grupo A (Média Tensão) junto à concessionária. Como alternativa, caso exista disponibilidade técnica de rede "Subterrânea" no local, você pode alterar o tipo de rede (atende até 100 kW em Baixa Tensão com disjuntor de 125A).`;
     }
     // 3. Limite Monofásico Aéreo (> 10 kW)
     else if (rede === 'aerea' && ligacao === 'monofasica' && carga > 10.0) {

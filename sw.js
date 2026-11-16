@@ -1,9 +1,9 @@
 /**
  * Service Worker - DJ Carga
- * Versão 1.2.0 - Continuidade matemática estrita nos intervalos (X < C) sem buracos
+ * Versão 1.2.1 - Tratamento aéreo 75-100 kW com prioridade Grupo A e alternativa subterrânea
  */
 
-const CACHE_NAME = 'djcarga-v1.2.0';
+const CACHE_NAME = 'djcarga-v1.2.1';
 
 const STATIC_ASSETS = [
   '/',
