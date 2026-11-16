@@ -1,9 +1,9 @@
 /**
  * Service Worker - DJ Carga
- * Versão 1.1.9 - Ajuste de precisão decimal e faixas em Watts na aba Descobrir Carga
+ * Versão 1.2.0 - Continuidade matemática estrita nos intervalos (X < C) sem buracos
  */
 
-const CACHE_NAME = 'djcarga-v1.1.9';
+const CACHE_NAME = 'djcarga-v1.2.0';
 
 const STATIC_ASSETS = [
   '/',
