@@ -1,9 +1,9 @@
 /**
  * Service Worker - DJ Carga
- * Versão 1.1.6 - Limite da categoria com quebra dinâmica de ligações
+ * Versão 1.1.7 - Exibição direta da combinação selecionada (ex: Subterrânea Monofásica)
  */
 
-const CACHE_NAME = 'djcarga-v1.1.6';
+const CACHE_NAME = 'djcarga-v1.1.7';
 
 const STATIC_ASSETS = [
   '/',
