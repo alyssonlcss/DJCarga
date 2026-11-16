@@ -798,26 +798,6 @@ input[type="number"]:focus {
   background: #cbd5e1;
 }
 
-.btn-never-show {
-  margin-top: 14px;
-  background: transparent;
-  border: none;
-  color: var(--text-light);
-  font-size: 0.82rem;
-  font-weight: 500;
-  cursor: pointer;
-  padding: 6px 12px;
-  border-radius: 6px;
-  transition: all 0.2s ease;
-  font-family: inherit;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.btn-never-show:hover {
-  color: var(--text-main);
-  background-color: #f1f5f9;
-}
 
 /* Responsividade Aprimorada para Dispositivos Móveis e Celulares */
 @media (max-width: 540px) {

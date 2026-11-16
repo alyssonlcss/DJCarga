@@ -1,9 +1,9 @@
 /**
  * Service Worker - DJ Carga
- * Versão 1.5.0 - Responsividade mobile, botão dispensar popup e bypass de cache em desenvolvimento
+ * Versão 1.5.1 - Instalação manual sob demanda pelo rodapé (sem popup automático inicial)
  */
 
-const CACHE_NAME = 'djcarga-v1.5.0';
+const CACHE_NAME = 'djcarga-v1.5.1';
 
 const STATIC_ASSETS = [
   '/',

@@ -666,11 +666,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('installModal');
   const btnInstall = document.getElementById('btnInstall');
   const btnCancel = document.getElementById('btnCancelInstall');
-  const btnNever = document.getElementById('btnNeverInstall');
   const btnOpenInstall = document.getElementById('btnOpenInstallModal');
   const installInstructions = document.getElementById('installInstructions');
-
-  const STORAGE_KEY_HIDE_INSTALL = 'djcarga_hide_install_prompt_v1';
 
   // Se já estiver instalado como app (standalone), oculta o botão do rodapé
   const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
@@ -699,29 +696,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         installInstructions.style.display = 'block';
       }
+      if (btnInstall) btnInstall.style.display = 'none';
     }
 
     modal.style.display = 'flex';
   }
 
-  // Abertura manual pelo botão do rodapé (reseta qualquer bloqueio prévio)
+  // Abertura manual acionada pelo botão do rodapé
   if (btnOpenInstall) {
     btnOpenInstall.addEventListener('click', () => {
-      localStorage.removeItem(STORAGE_KEY_HIDE_INSTALL);
       abrirModalInstalacao();
     });
   }
 
+  // Captura o prompt de instalação sem abrir popups automáticos na tela inicial
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-
-    // Se o usuário optou por "não mostrar mais", não exibe o modal automaticamente
-    if (localStorage.getItem(STORAGE_KEY_HIDE_INSTALL) === 'true') {
-      return;
-    }
-
-    abrirModalInstalacao();
   });
 
   if (btnInstall) {
@@ -731,17 +722,9 @@ document.addEventListener('DOMContentLoaded', () => {
         deferredPrompt.prompt();
         const choice = await deferredPrompt.userChoice;
         if (choice && choice.outcome === 'accepted') {
-          localStorage.setItem(STORAGE_KEY_HIDE_INSTALL, 'true');
           if (btnOpenInstall) btnOpenInstall.style.display = 'none';
         }
         deferredPrompt = null;
-      } else {
-        // Se o prompt nativo não estiver disponível, exibe as orientações de instalação
-        if (installInstructions && installInstructions.style.display === 'none') {
-          abrirModalInstalacao();
-        } else {
-          if (modal) modal.style.display = 'none';
-        }
       }
     });
   }
@@ -752,17 +735,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  if (btnNever && modal) {
-    btnNever.addEventListener('click', () => {
-      localStorage.setItem(STORAGE_KEY_HIDE_INSTALL, 'true');
-      modal.style.display = 'none';
+  // Permite fechar o modal clicando fora da caixa de diálogo
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
     });
   }
 
   window.addEventListener('appinstalled', () => {
-    localStorage.setItem(STORAGE_KEY_HIDE_INSTALL, 'true');
     if (modal) modal.style.display = 'none';
     if (btnOpenInstall) btnOpenInstall.style.display = 'none';
+    deferredPrompt = null;
   });
 
   // Sincroniza a versão exibida no rodapé diretamente do CACHE_NAME
