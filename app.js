@@ -6,44 +6,44 @@
 
 // Tabela de regras normativas
 const REGRAS = [
-  { rede: 'aerea', ligacao: 'monofasica', min: 0, max: 5.0, disjuntor: 20, cu: '4+4 mm²', al: '6+6 mm²', int: '0 < C ≤ 5,0' },
-  { rede: 'aerea', ligacao: 'monofasica', min: 5.0, max: 8.0, disjuntor: 32, cu: '4+4 mm²', al: '6+6 mm²', int: '5,1 < C ≤ 8,0' },
-  { rede: 'aerea', ligacao: 'monofasica', min: 8.0, max: 10.0, disjuntor: 40, cu: '6+6 mm²', al: '10+10 mm²', int: '8,1 < C ≤ 10,0' },
-  { rede: 'aerea', ligacao: 'bifasica', min: 10.0, max: 20.0, disjuntor: 50, cu: '2x10+10 mm²', al: '2x16+16 mm²', int: '10,1 < C ≤ 20,0' },
-  { rede: 'aerea', ligacao: 'trifasica', min: 10.0, max: 19.0, disjuntor: 25, cu: '3x6+6 mm²', al: '3x6+6 mm²', int: '10,1 < C ≤ 19,0' },
-  { rede: 'aerea', ligacao: 'trifasica', min: 19.0, max: 21.0, disjuntor: 32, cu: '3x6+6 mm²', al: '3x10+10 mm²', int: '19,1 < C ≤ 21,0' },
-  { rede: 'aerea', ligacao: 'trifasica', min: 21.0, max: 30.0, disjuntor: 40, cu: '3x10+10 mm²', al: '3x16+16 mm²', int: '21,1 < C ≤ 30,0' },
-  { rede: 'aerea', ligacao: 'trifasica', min: 30.0, max: 37.0, disjuntor: 50, cu: '3x16+16 mm²', al: '3x25+25 mm²', int: '30,1 < C ≤ 37,0' },
-  { rede: 'aerea', ligacao: 'trifasica', min: 37.0, max: 47.0, disjuntor: 63, cu: '3x16+16 mm²', al: '3x25+25 mm²', int: '37,1 < C ≤ 47,0' },
-  { rede: 'aerea', ligacao: 'trifasica', min: 47.0, max: 60.0, disjuntor: 80, cu: '3x35+35 mm²', al: '3x50+50 mm²', int: '47,1 < C ≤ 60,0' },
-  { rede: 'aerea', ligacao: 'trifasica', min: 60.0, max: 75.0, disjuntor: 100, cu: '3x35+35 mm²', al: '3x50+50 mm²', int: '60,1 < C ≤ 75,0' },
-  { rede: 'subterranea', ligacao: 'monofasica', min: 0, max: 5.0, disjuntor: 20, cu: '10 mm²', al: '25 mm²', int: '0 < C ≤ 5,0' },
-  { rede: 'subterranea', ligacao: 'monofasica', min: 5.0, max: 8.0, disjuntor: 32, cu: '10 mm²', al: '25 mm²', int: '5,1 < C ≤ 8,0' },
-  { rede: 'subterranea', ligacao: 'monofasica', min: 8.0, max: 10.0, disjuntor: 40, cu: '10 mm²', al: '25 mm²', int: '8,1 < C ≤ 10,0' },
-  { rede: 'subterranea', ligacao: 'monofasica', min: 10.0, max: 12.5, disjuntor: 50, cu: '16 mm²', al: '25 mm²', int: '10,1 < C ≤ 12,5' },
-  { rede: 'subterranea', ligacao: 'monofasica', min: 12.5, max: 16.0, disjuntor: 63, cu: '16 mm²', al: '25 mm²', int: '12,51 < C ≤ 16,0' },
-  { rede: 'subterranea', ligacao: 'bifasica', min: 10.0, max: 20.0, disjuntor: 50, cu: '16 mm²', al: '25 mm²', int: '10,1 < C ≤ 20,0' },
-  { rede: 'subterranea', ligacao: 'trifasica', min: 16.0, max: 19.0, disjuntor: 25, cu: '16 mm²', al: '25 mm²', int: '16,1 < C ≤ 19,0' },
-  { rede: 'subterranea', ligacao: 'trifasica', min: 19.0, max: 21.0, disjuntor: 32, cu: '16 mm²', al: '25 mm²', int: '19,1 < C ≤ 21,0' },
-  { rede: 'subterranea', ligacao: 'trifasica', min: 21.0, max: 30.0, disjuntor: 40, cu: '16 mm²', al: '25 mm²', int: '21,1 < C ≤ 30,0' },
-  { rede: 'subterranea', ligacao: 'trifasica', min: 30.0, max: 37.0, disjuntor: 50, cu: '16 mm²', al: '25 mm²', int: '30,1 < C ≤ 37,0' },
-  { rede: 'subterranea', ligacao: 'trifasica', min: 37.0, max: 47.0, disjuntor: 63, cu: '16 mm²', al: '25 mm²', int: '37,1 < C ≤ 47,0' },
-  { rede: 'subterranea', ligacao: 'trifasica', min: 47.0, max: 60.0, disjuntor: 80, cu: '25 mm²', al: '35 mm²', int: '47,1 < C ≤ 60,0' },
-  { rede: 'subterranea', ligacao: 'trifasica', min: 60.0, max: 75.0, disjuntor: 100, cu: '25 mm²', al: '50 mm²', int: '60,1 < C ≤ 75,0' },
-  { rede: 'subterranea', ligacao: 'trifasica', min: 75.0, max: 100.0, disjuntor: 125, cu: '3x50+50 mm²', al: '3x70+70 mm²', int: '75,1 < C ≤ 100,0' }
+  { rede: 'aerea', ligacao: 'monofasica', min: 0, max: 5.0, disjuntor: 20, cu: '4+4 mm²', al: '6+6 mm²', int: '0 < C ≤ 5,0 kW', watts: '0 a 5.000 W' },
+  { rede: 'aerea', ligacao: 'monofasica', min: 5.0, max: 8.0, disjuntor: 32, cu: '4+4 mm²', al: '6+6 mm²', int: '5,0 < C ≤ 8,0 kW', watts: '5.001 a 8.000 W' },
+  { rede: 'aerea', ligacao: 'monofasica', min: 8.0, max: 10.0, disjuntor: 40, cu: '6+6 mm²', al: '10+10 mm²', int: '8,0 < C ≤ 10,0 kW', watts: '8.001 a 10.000 W' },
+  { rede: 'aerea', ligacao: 'bifasica', min: 10.0, max: 20.0, disjuntor: 50, cu: '2x10+10 mm²', al: '2x16+16 mm²', int: '10,0 < C ≤ 20,0 kW', watts: '10.001 a 20.000 W' },
+  { rede: 'aerea', ligacao: 'trifasica', min: 10.0, max: 19.0, disjuntor: 25, cu: '3x6+6 mm²', al: '3x6+6 mm²', int: '10,0 < C ≤ 19,0 kW', watts: '10.001 a 19.000 W' },
+  { rede: 'aerea', ligacao: 'trifasica', min: 19.0, max: 21.0, disjuntor: 32, cu: '3x6+6 mm²', al: '3x10+10 mm²', int: '19,0 < C ≤ 21,0 kW', watts: '19.001 a 21.000 W' },
+  { rede: 'aerea', ligacao: 'trifasica', min: 21.0, max: 30.0, disjuntor: 40, cu: '3x10+10 mm²', al: '3x16+16 mm²', int: '21,0 < C ≤ 30,0 kW', watts: '21.001 a 30.000 W' },
+  { rede: 'aerea', ligacao: 'trifasica', min: 30.0, max: 37.0, disjuntor: 50, cu: '3x16+16 mm²', al: '3x25+25 mm²', int: '30,0 < C ≤ 37,0 kW', watts: '30.001 a 37.000 W' },
+  { rede: 'aerea', ligacao: 'trifasica', min: 37.0, max: 47.0, disjuntor: 63, cu: '3x16+16 mm²', al: '3x25+25 mm²', int: '37,0 < C ≤ 47,0 kW', watts: '37.001 a 47.000 W' },
+  { rede: 'aerea', ligacao: 'trifasica', min: 47.0, max: 60.0, disjuntor: 80, cu: '3x35+35 mm²', al: '3x50+50 mm²', int: '47,0 < C ≤ 60,0 kW', watts: '47.001 a 60.000 W' },
+  { rede: 'aerea', ligacao: 'trifasica', min: 60.0, max: 75.0, disjuntor: 100, cu: '3x35+35 mm²', al: '3x50+50 mm²', int: '60,0 < C ≤ 75,0 kW', watts: '60.001 a 75.000 W' },
+  { rede: 'subterranea', ligacao: 'monofasica', min: 0, max: 5.0, disjuntor: 20, cu: '10 mm²', al: '25 mm²', int: '0 < C ≤ 5,0 kW', watts: '0 a 5.000 W' },
+  { rede: 'subterranea', ligacao: 'monofasica', min: 5.0, max: 8.0, disjuntor: 32, cu: '10 mm²', al: '25 mm²', int: '5,0 < C ≤ 8,0 kW', watts: '5.001 a 8.000 W' },
+  { rede: 'subterranea', ligacao: 'monofasica', min: 8.0, max: 10.0, disjuntor: 40, cu: '10 mm²', al: '25 mm²', int: '8,0 < C ≤ 10,0 kW', watts: '8.001 a 10.000 W' },
+  { rede: 'subterranea', ligacao: 'monofasica', min: 10.0, max: 12.5, disjuntor: 50, cu: '16 mm²', al: '25 mm²', int: '10,0 < C ≤ 12,5 kW', watts: '10.001 a 12.500 W' },
+  { rede: 'subterranea', ligacao: 'monofasica', min: 12.5, max: 16.0, disjuntor: 63, cu: '16 mm²', al: '25 mm²', int: '12,5 < C ≤ 16,0 kW', watts: '12.501 a 16.000 W' },
+  { rede: 'subterranea', ligacao: 'bifasica', min: 10.0, max: 20.0, disjuntor: 50, cu: '16 mm²', al: '25 mm²', int: '10,0 < C ≤ 20,0 kW', watts: '10.001 a 20.000 W' },
+  { rede: 'subterranea', ligacao: 'trifasica', min: 16.0, max: 19.0, disjuntor: 25, cu: '16 mm²', al: '25 mm²', int: '16,0 < C ≤ 19,0 kW', watts: '16.001 a 19.000 W' },
+  { rede: 'subterranea', ligacao: 'trifasica', min: 19.0, max: 21.0, disjuntor: 32, cu: '16 mm²', al: '25 mm²', int: '19,0 < C ≤ 21,0 kW', watts: '19.001 a 21.000 W' },
+  { rede: 'subterranea', ligacao: 'trifasica', min: 21.0, max: 30.0, disjuntor: 40, cu: '16 mm²', al: '25 mm²', int: '21,0 < C ≤ 30,0 kW', watts: '21.001 a 30.000 W' },
+  { rede: 'subterranea', ligacao: 'trifasica', min: 30.0, max: 37.0, disjuntor: 50, cu: '16 mm²', al: '25 mm²', int: '30,0 < C ≤ 37,0 kW', watts: '30.001 a 37.000 W' },
+  { rede: 'subterranea', ligacao: 'trifasica', min: 37.0, max: 47.0, disjuntor: 63, cu: '16 mm²', al: '25 mm²', int: '37,0 < C ≤ 47,0 kW', watts: '37.001 a 47.000 W' },
+  { rede: 'subterranea', ligacao: 'trifasica', min: 47.0, max: 60.0, disjuntor: 80, cu: '25 mm²', al: '35 mm²', int: '47,0 < C ≤ 60,0 kW', watts: '47.001 a 60.000 W' },
+  { rede: 'subterranea', ligacao: 'trifasica', min: 60.0, max: 75.0, disjuntor: 100, cu: '25 mm²', al: '50 mm²', int: '60,0 < C ≤ 75,0 kW', watts: '60.001 a 75.000 W' },
+  { rede: 'subterranea', ligacao: 'trifasica', min: 75.0, max: 100.0, disjuntor: 125, cu: '3x50+50 mm²', al: '3x70+70 mm²', int: '75,0 < C ≤ 100,0 kW', watts: '75.001 a 100.000 W' }
 ];
 
 // Metadados normativos de limites e disjuntores por categoria
 const LIMITES_NORMATIVOS = {
   aerea: {
     monofasica: { min: 0, max: 10.0, label: '0 < C ≤ 10,0 kW', disjuntores: [20, 32, 40] },
-    bifasica: { min: 10.0, max: 20.0, label: '10,1 < C ≤ 20,0 kW', disjuntores: [50] },
-    trifasica: { min: 10.0, max: 75.0, label: '10,1 < C ≤ 75,0 kW', disjuntores: [25, 32, 40, 50, 63, 80, 100] }
+    bifasica: { min: 10.0, max: 20.0, label: '10,0 < C ≤ 20,0 kW', disjuntores: [50] },
+    trifasica: { min: 10.0, max: 75.0, label: '10,0 < C ≤ 75,0 kW', disjuntores: [25, 32, 40, 50, 63, 80, 100] }
   },
   subterranea: {
     monofasica: { min: 0, max: 16.0, label: '0 < C ≤ 16,0 kW', disjuntores: [20, 32, 40, 50, 63] },
-    bifasica: { min: 10.0, max: 20.0, label: '10,1 < C ≤ 20,0 kW', disjuntores: [50] },
-    trifasica: { min: 16.0, max: 100.0, label: '16,1 < C ≤ 100,0 kW', disjuntores: [25, 32, 40, 50, 63, 80, 100, 125] }
+    bifasica: { min: 10.0, max: 20.0, label: '10,0 < C ≤ 20,0 kW', disjuntores: [50] },
+    trifasica: { min: 16.0, max: 100.0, label: '16,0 < C ≤ 100,0 kW', disjuntores: [25, 32, 40, 50, 63, 80, 100, 125] }
   }
 };
 
@@ -269,6 +269,7 @@ function calcularAba2() {
 
   const box = document.getElementById('resultadoBox2');
   const mainRes = document.getElementById('mainRes2');
+  const subWatts = document.getElementById('subResWatts2');
   const subRes = document.getElementById('subRes2');
   const errorDetail = document.getElementById('errorDetail2');
   const caboCu2 = document.getElementById('caboCu2');
@@ -282,6 +283,10 @@ function calcularAba2() {
     if (title) title.innerText = 'Intervalo de Carga (kW)';
     mainRes.innerText = '---';
     mainRes.style.fontSize = '2.2rem';
+    if (subWatts) {
+      subWatts.style.display = 'none';
+      subWatts.innerText = '';
+    }
     if (errorDetail) {
       errorDetail.style.display = 'none';
       errorDetail.innerText = '';
@@ -295,9 +300,13 @@ function calcularAba2() {
   if (regra) {
     box.classList.remove('error');
     const title = box.querySelector('h3');
-    if (title) title.innerText = 'Carga Suportada (kW)';
+    if (title) title.innerText = 'Intervalo de Carga (kW)';
     mainRes.innerText = regra.int;
     mainRes.style.fontSize = '2.2rem';
+    if (subWatts) {
+      subWatts.innerText = `Equivalente a: ${regra.watts}`;
+      subWatts.style.display = 'block';
+    }
     if (errorDetail) {
       errorDetail.style.display = 'none';
       errorDetail.innerText = '';
@@ -310,6 +319,10 @@ function calcularAba2() {
     const title = box.querySelector('h3');
     if (title) title.innerText = 'Disjuntor Fora do Padrão';
     subRes.style.display = 'none';
+    if (subWatts) {
+      subWatts.style.display = 'none';
+      subWatts.innerText = '';
+    }
 
     let detalhe = '';
     const categoria = LIMITES_NORMATIVOS[rede]?.[ligacao];

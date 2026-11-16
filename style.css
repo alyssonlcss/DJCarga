@@ -284,6 +284,15 @@ select:focus {
   word-break: break-word;
 }
 
+.sub-watts {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-top: 6px;
+  margin-bottom: 0;
+  font-variant-numeric: tabular-nums;
+}
+
 .result-box.error .main-result {
   color: var(--error-text);
   font-size: 1.2rem;

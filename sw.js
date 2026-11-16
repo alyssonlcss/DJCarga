@@ -1,9 +1,9 @@
 /**
  * Service Worker - DJ Carga
- * Versão 1.1.8 - Alerta normativo para solicitação no Grupo A (Média Tensão)
+ * Versão 1.1.9 - Ajuste de precisão decimal e faixas em Watts na aba Descobrir Carga
  */
 
-const CACHE_NAME = 'djcarga-v1.1.8';
+const CACHE_NAME = 'djcarga-v1.1.9';
 
 const STATIC_ASSETS = [
   '/',
