@@ -1,9 +1,9 @@
 /**
  * Service Worker - DJ Carga
- * Versão 1.2.1 - Tratamento aéreo 75-100 kW com prioridade Grupo A e alternativa subterrânea
+ * Versão 1.3.0 - Seletor unificado kW/W, equivalência em tempo real e auto-correção inteligente
  */
 
-const CACHE_NAME = 'djcarga-v1.2.1';
+const CACHE_NAME = 'djcarga-v1.3.0';
 
 const STATIC_ASSETS = [
   '/',

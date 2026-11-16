@@ -3,7 +3,7 @@
 [![Licença: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Vercel Status](https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel)](https://vercel.com)
 [![PWA Ready](https://img.shields.io/badge/PWA-Offline%20Ready-success?logo=pwa)](https://developer.mozilla.org/pt-BR/docs/Web/Progressive_web_apps)
-[![Versão](https://img.shields.io/badge/versão-1.1.0-informational.svg)](https://github.com/alyssonlcss/DJCarga)
+[![Versão](https://img.shields.io/badge/versão-1.3.0-informational.svg)](https://github.com/alyssonlcss/DJCarga)
 
 O **DJ Carga** é uma aplicação web progressiva (PWA) desenvolvida para eletricistas, engenheiros, técnicos e projetistas realizarem o dimensionamento rápido, normativo e preciso de disjuntores de entrada e condutores (cobre e alumínio) conforme os limites de carga em redes aéreas e subterrâneas.
 
@@ -13,12 +13,14 @@ Construído sob a filosofia **Offline-First**, o aplicativo funciona sem conexã
 
 ## 🚀 Funcionalidades Principais
 
-- 🔌 **Descobrir Disjuntor por Carga (kW ou W)**:
-  - Informe a potência em kW ou use o conversor rápido de Watts para kW.
+- 🔌 **Descobrir Disjuntor por Carga (kW ou Watts)**:
+  - **Seletor Unificado de Unidade [kW | W]:** Alterne instantaneamente entre kW e Watts com conversão automática do valor digitado.
+  - **Equivalência em Tempo Real:** Visualização dinâmica da equivalência correspondente na outra unidade enquanto você digita.
+  - **Auto-Correção Inteligente de Escala:** Alerta proativo e botão de correção em 1 clique caso o usuário digite um valor em escala incompatível (ex: digitar 15.000 pensando em Watts no modo kW).
   - Selecione o tipo de rede (**Aérea** ou **Subterrânea**) e tipo de ligação (**Monofásica**, **Bifásica** ou **Trifásica**).
   - Obtenha instantaneamente o disjuntor recomendado (A) e as bitolas normativas para condutores de **Cobre (Cu)** e **Alumínio (AL)**.
   - **Indicador Dinâmico de Faixa:** Exibe em tempo real o intervalo normativo permitido para a combinação selecionada.
-  - **Tratamento Inteligente de Limites (v1.1.0):** Diagnóstico detalhado e educativo com recomendação automática de migração de ligação (ex: monofásico para bifásico/trifásico), migração de rede (aérea até 75 kW para subterrânea até 100 kW) ou indicação de atendimento obrigatório em Média Tensão para cargas > 100 kW.
+  - **Tratamento Inteligente de Limites:** Diagnóstico detalhado com recomendação automática de migração de ligação, viabilidade de rede subterrânea ou indicação de atendimento prioritário no Grupo A (Média Tensão).
 
 - ⚡ **Descobrir Carga por Disjuntor**:
   - Informe a corrente nominal do disjuntor (A).

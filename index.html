@@ -38,14 +38,19 @@
     <!-- ABA 1: Descobrir Disjuntor por Carga -->
     <main>
         <section id="aba1" class="tab-content active" aria-labelledby="aba1">
-            <div class="converter-box">
-                <label for="cargaW">Conversor Rápido:</label>
-                <input type="number" id="cargaW" placeholder="Digite em Watts (ex: 35500)">
-            </div>
-
             <div class="form-group">
-                <label for="cargaKw">Potência Total em kW</label>
-                <input type="text" id="cargaKw" inputmode="decimal" placeholder="Ex: 15,5">
+                <div class="label-with-unit">
+                    <label for="cargaKw">Potência Instalada</label>
+                    <div class="unit-toggle" role="group" aria-label="Unidade de Medida">
+                        <button type="button" class="unit-btn active" data-unit="kW" id="unitBtnKw">kW</button>
+                        <button type="button" class="unit-btn" data-unit="W" id="unitBtnW">Watts (W)</button>
+                    </div>
+                </div>
+                <div class="input-unit-wrapper">
+                    <input type="text" id="cargaKw" inputmode="decimal" placeholder="Ex: 15,5">
+                    <span id="unitBadge" class="unit-badge">kW</span>
+                </div>
+                <div id="unitFeedback" class="unit-feedback" style="display: none;"></div>
             </div>
 
             <div class="form-row">

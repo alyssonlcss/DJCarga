@@ -105,23 +105,134 @@ function atualizarBadgeLimites2() {
   }
 }
 
-// Conversor Watts para kW (precisão de até 3 casas decimais: 1 kW = 1.000 W)
-function converterWattsParaKw() {
-  const inputWatts = document.getElementById('cargaW');
-  const inputKw = document.getElementById('cargaKw');
-  const w = inputWatts ? inputWatts.value.trim() : '';
+// Unidade de medida ativa na Aba 1 ('kW' ou 'W') - Solução 3
+let unidadeAtiva = 'kW';
 
-  if (w && !isNaN(w)) {
-    const valKw = parseFloat(w) / 1000;
-    const kwValue = Number(valKw.toFixed(3)).toString().replace('.', ',');
-    if (inputKw) {
-      inputKw.value = kwValue;
-    }
-    calcularAba1();
-  } else {
-    if (inputKw) inputKw.value = '';
-    resetarBox1();
+// Atualização de feedback e alertas inteligentes (Soluções 1 e 2)
+function atualizarFeedbackPotencia(numDigitado) {
+  const feedback = document.getElementById('unitFeedback');
+  const input = document.getElementById('cargaKw');
+  if (!feedback || !input) return;
+
+  if (isNaN(numDigitado) || numDigitado <= 0) {
+    feedback.style.display = 'none';
+    feedback.innerHTML = '';
+    return;
   }
+
+  feedback.style.display = 'block';
+
+  if (unidadeAtiva === 'kW') {
+    // Solução 1: Usuário digitou >= 500 no modo kW (quase certamente pensou em Watts)
+    if (numDigitado >= 500) {
+      const valorSugeridoKw = Number((numDigitado / 1000).toFixed(3));
+      const valorFormatadoKw = valorSugeridoKw.toString().replace('.', ',');
+      const numFormatado = numDigitado.toLocaleString('pt-BR');
+      feedback.innerHTML = `
+        <div class="feedback-alert">
+          <span class="alert-icon">⚠️</span>
+          <div class="alert-content">
+            <strong>Você digitou ${numFormatado} kW (${(numDigitado * 1000).toLocaleString('pt-BR')} W).</strong>
+            <span>Se o seu valor original foi em Watts, você quis dizer <strong>${valorFormatadoKw} kW</strong>?</span>
+            <button type="button" class="btn-quick-fix" id="btnCorrigirParaKw">
+              ⚡ Sim, ajustar para ${valorFormatadoKw} kW
+            </button>
+          </div>
+        </div>
+      `;
+      const btnFix = document.getElementById('btnCorrigirParaKw');
+      if (btnFix) {
+        btnFix.addEventListener('click', () => {
+          input.value = valorFormatadoKw;
+          calcularAba1();
+        });
+      }
+    } else {
+      // Solução 2: Exibe equivalência em Watts em tempo real
+      const wattsEquivalentes = Math.round(numDigitado * 1000).toLocaleString('pt-BR');
+      feedback.innerHTML = `
+        <div class="hint-normal">
+          <span>💡 Equivalência:</span>
+          <strong>${wattsEquivalentes} Watts (W)</strong>
+        </div>
+      `;
+    }
+  } else {
+    // Unidade ativa é Watts (W)
+    const kwEquivalente = Number((numDigitado / 1000).toFixed(3));
+    const kwFormatado = kwEquivalente.toString().replace('.', ',');
+
+    // Solução 1: No modo Watts, digitou um valor muito baixo (< 100 W, ex: 15 ou 20)
+    if (numDigitado < 100) {
+      const wSugerido = (numDigitado * 1000).toLocaleString('pt-BR');
+      feedback.innerHTML = `
+        <div class="feedback-alert">
+          <span class="alert-icon">⚠️</span>
+          <div class="alert-content">
+            <strong>${numDigitado} W é uma potência muito baixa para padrão de entrada.</strong>
+            <span>Se você pensou em ${numDigitado} kW, o valor correto é <strong>${wSugerido} W</strong>.</span>
+            <button type="button" class="btn-quick-fix" id="btnCorrigirParaW">
+              ⚡ Sim, ajustar para ${wSugerido} W (${numDigitado} kW)
+            </button>
+          </div>
+        </div>
+      `;
+      const btnFix = document.getElementById('btnCorrigirParaW');
+      if (btnFix) {
+        btnFix.addEventListener('click', () => {
+          input.value = (numDigitado * 1000).toString();
+          calcularAba1();
+        });
+      }
+    } else {
+      // Solução 2: Exibe equivalência em kW em tempo real
+      feedback.innerHTML = `
+        <div class="hint-normal">
+          <span>💡 Equivalência:</span>
+          <strong>${kwFormatado} kW</strong>
+        </div>
+      `;
+    }
+  }
+}
+
+// Alternância de Unidade entre kW e Watts (Solução 3)
+function alternarUnidade(novaUnidade) {
+  if (unidadeAtiva === novaUnidade) return;
+  unidadeAtiva = novaUnidade;
+
+  const btnKw = document.getElementById('unitBtnKw');
+  const btnW = document.getElementById('unitBtnW');
+  const badge = document.getElementById('unitBadge');
+  const input = document.getElementById('cargaKw');
+
+  if (novaUnidade === 'kW') {
+    btnKw?.classList.add('active');
+    btnW?.classList.remove('active');
+    if (badge) badge.innerText = 'kW';
+    if (input) {
+      input.placeholder = 'Ex: 15,5';
+      const valAtual = parseInput(input.value);
+      if (!isNaN(valAtual) && valAtual > 0) {
+        const emKw = Number((valAtual / 1000).toFixed(3)).toString().replace('.', ',');
+        input.value = emKw;
+      }
+    }
+  } else {
+    btnW?.classList.add('active');
+    btnKw?.classList.remove('active');
+    if (badge) badge.innerText = 'W';
+    if (input) {
+      input.placeholder = 'Ex: 15500';
+      const valAtual = parseInput(input.value);
+      if (!isNaN(valAtual) && valAtual > 0) {
+        const emW = Math.round(valAtual * 1000).toString();
+        input.value = emW;
+      }
+    }
+  }
+
+  calcularAba1();
 }
 
 // Reset do card de resultado da Aba 1
@@ -130,6 +241,12 @@ function resetarBox1() {
   const mainRes = document.getElementById('mainRes1');
   const subRes = document.getElementById('subRes1');
   const errorDetail = document.getElementById('errorDetail1');
+  const feedback = document.getElementById('unitFeedback');
+
+  if (feedback) {
+    feedback.style.display = 'none';
+    feedback.innerHTML = '';
+  }
 
   if (box) {
     box.classList.remove('error');
@@ -152,7 +269,7 @@ function resetarBox1() {
 // Cálculo da Aba 1 (Descobrir Disjuntor com Tratamento Avançado de Limites)
 function calcularAba1() {
   const cargaVal = document.getElementById('cargaKw')?.value;
-  const carga = parseInput(cargaVal);
+  const numDigitado = parseInput(cargaVal);
   const rede = document.getElementById('rede1')?.value;
   const ligacao = document.getElementById('ligacao1')?.value;
 
@@ -165,10 +282,16 @@ function calcularAba1() {
 
   if (!box || !mainRes || !subRes) return;
 
-  if (isNaN(carga) || carga <= 0) {
+  if (isNaN(numDigitado) || numDigitado <= 0) {
     resetarBox1();
     return;
   }
+
+  // Atualiza feedback em tempo real e avisos contextuais (Soluções 1 e 2)
+  atualizarFeedbackPotencia(numDigitado);
+
+  // Valor normalizado em kW para fins de cálculo normativo
+  const carga = (unidadeAtiva === 'W') ? (numDigitado / 1000) : numDigitado;
 
   const regra = REGRAS.find(r => r.rede === rede && r.ligacao === ligacao && carga > r.min && carga <= r.max);
 
@@ -202,6 +325,9 @@ function calcularAba1() {
     if (carga > 100.0) {
       mensagemPrincipal = 'Carga Excede Baixa Tensão (> 100 kW) • Requer Grupo A';
       detalheOrientacao = `A carga calculada (${cargaFormatada} kW) ultrapassa o limite normativo de fornecimento em Baixa Tensão (Grupo B). Este projeto requer solicitação de fornecimento no Grupo A (Média Tensão - 13,8 kV), com subestação / posto de transformação próprio e contratação de demanda.`;
+      if (unidadeAtiva === 'kW' && numDigitado >= 500) {
+        detalheOrientacao += `\n\n💡 Dica: Se você digitou "${numDigitado}" pensando em Watts, o valor equivalente correto é ${(numDigitado / 1000).toString().replace('.', ',')} kW. Use a opção de correção acima.`;
+      }
     }
     // 2. Cargas entre 75 kW e 100 kW em rede Aérea
     else if (rede === 'aerea' && carga > 75.0 && carga <= 100.0) {
@@ -364,9 +490,11 @@ document.addEventListener('DOMContentLoaded', () => {
   atualizarBadgeLimites1();
   atualizarBadgeLimites2();
 
-  // Inputs Aba 1
-  const cargaW = document.getElementById('cargaW');
-  if (cargaW) cargaW.addEventListener('input', converterWattsParaKw);
+  // Alternância de unidade Aba 1 (Solução 3)
+  const btnKw = document.getElementById('unitBtnKw');
+  const btnW = document.getElementById('unitBtnW');
+  if (btnKw) btnKw.addEventListener('click', () => alternarUnidade('kW'));
+  if (btnW) btnW.addEventListener('click', () => alternarUnidade('W'));
 
   const cargaKw = document.getElementById('cargaKw');
   if (cargaKw) cargaKw.addEventListener('input', calcularAba1);
