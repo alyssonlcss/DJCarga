@@ -88,14 +88,15 @@ function atualizarBadgeLimites2() {
   }
 }
 
-// Conversor Watts para kW
+// Conversor Watts para kW (precisão de até 3 casas decimais: 1 kW = 1.000 W)
 function converterWattsParaKw() {
   const inputWatts = document.getElementById('cargaW');
   const inputKw = document.getElementById('cargaKw');
   const w = inputWatts ? inputWatts.value.trim() : '';
 
   if (w && !isNaN(w)) {
-    const kwValue = (parseFloat(w) / 1000).toFixed(2).replace('.00', '');
+    const valKw = parseFloat(w) / 1000;
+    const kwValue = Number(valKw.toFixed(3)).toString().replace('.', ',');
     if (inputKw) {
       inputKw.value = kwValue;
     }
@@ -178,7 +179,7 @@ function calcularAba1() {
     let mensagemPrincipal = 'Limite Não Atendido';
     let detalheOrientacao = '';
 
-    const cargaFormatada = carga.toLocaleString('pt-BR', { maximumFractionDigits: 2 });
+    const cargaFormatada = carga.toLocaleString('pt-BR', { maximumFractionDigits: 3 });
 
     // 1. Cargas acima do teto de Baixa Tensão (100 kW)
     if (carga > 100.0) {

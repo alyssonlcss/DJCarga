@@ -1,9 +1,9 @@
 /**
  * Service Worker - DJ Carga
- * Versão 1.1.3 - Sincronização Normativa Enel CE (Anexos F e G)
+ * Versão 1.1.4 - Conversão W para kW com 3 casas decimais
  */
 
-const CACHE_NAME = 'djcarga-v1.1.3';
+const CACHE_NAME = 'djcarga-v1.1.4';
 
 const STATIC_ASSETS = [
   '/',
