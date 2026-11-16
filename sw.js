@@ -1,9 +1,9 @@
 /**
  * Service Worker - DJ Carga
- * Versão 1.3.1 - Gavetinha embutida de unidade (padrão Watts) com auto-correção
+ * Versão 1.3.2 - Redesign moderno dos selects com setas SVG e acabamento refinado
  */
 
-const CACHE_NAME = 'djcarga-v1.3.1';
+const CACHE_NAME = 'djcarga-v1.3.2';
 
 const STATIC_ASSETS = [
   '/',
