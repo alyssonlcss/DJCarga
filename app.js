@@ -200,13 +200,13 @@ function calcularAba1() {
 
     // 1. Cargas acima do teto de Baixa Tensão (100 kW)
     if (carga > 100.0) {
-      mensagemPrincipal = 'Carga Excede Baixa Tensão (> 100 kW)';
-      detalheOrientacao = `A carga calculada (${cargaFormatada} kW) ultrapassa o limite máximo normativo para fornecimento em Baixa Tensão (100 kW). É obrigatório atendimento em Média Tensão (13,8 kV) com Subestação / Posto de Transformação dedicado.`;
+      mensagemPrincipal = 'Carga Excede Baixa Tensão (> 100 kW) • Requer Grupo A';
+      detalheOrientacao = `A carga calculada (${cargaFormatada} kW) ultrapassa o limite normativo de fornecimento em Baixa Tensão (Grupo B). Este projeto requer solicitação de fornecimento no Grupo A (Média Tensão - 13,8 kV), com subestação / posto de transformação próprio e contratação de demanda.`;
     }
     // 2. Cargas entre 75 kW e 100 kW em rede Aérea
     else if (rede === 'aerea' && carga > 75.0 && carga <= 100.0) {
       mensagemPrincipal = 'Limite Máximo Aéreo Ultrapassado (75 kW)';
-      detalheOrientacao = `A rede Aérea suporta no máximo 75 kW. Para cargas de ${cargaFormatada} kW, altere o Tipo de Rede para "Subterrânea" (atende até 100 kW com ligação Trifásica).`;
+      detalheOrientacao = `A rede Aérea suporta no máximo 75 kW em Baixa Tensão. Para cargas de ${cargaFormatada} kW, altere o Tipo de Rede para "Subterrânea" (atende até 100 kW no Grupo B) ou solicite atendimento no Grupo A.`;
     }
     // 3. Limite Monofásico Aéreo (> 10 kW)
     else if (rede === 'aerea' && ligacao === 'monofasica' && carga > 10.0) {
@@ -320,7 +320,7 @@ function calcularAba2() {
       detalhe = 'O disjuntor de 125A é exclusivo para Rede Subterrânea Trifásica (até 100 kW). Em rede aérea, o disjuntor máximo padronizado é 100A (75 kW).';
     } else if (disjuntor > 125) {
       mainRes.innerText = `Disjuntor ${disjuntor}A Excede Baixa Tensão`;
-      detalhe = 'Disjuntores acima de 125A não são permitidos em padrão de entrada direta de baixa tensão. Exigem medição indireta (com TCs) ou atendimento em Média Tensão.';
+      detalhe = 'Disjuntores acima de 125A não são permitidos em padrão de entrada direta de Baixa Tensão (Grupo B). Exigem medição indireta (com TCs) ou solicitação de fornecimento no Grupo A (Média Tensão).';
     } else if (disjuntor > 100 && rede === 'aerea') {
       mainRes.innerText = `Disjuntor ${disjuntor}A Acima do Teto Aéreo`;
       detalhe = `O limite de disjuntor para rede aérea é de 100A. Para utilizar disjuntores maiores, altere para Rede Subterrânea.`;

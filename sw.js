@@ -1,9 +1,9 @@
 /**
  * Service Worker - DJ Carga
- * Versão 1.1.7 - Exibição direta da combinação selecionada (ex: Subterrânea Monofásica)
+ * Versão 1.1.8 - Alerta normativo para solicitação no Grupo A (Média Tensão)
  */
 
-const CACHE_NAME = 'djcarga-v1.1.7';
+const CACHE_NAME = 'djcarga-v1.1.8';
 
 const STATIC_ASSETS = [
   '/',
