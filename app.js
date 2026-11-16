@@ -125,25 +125,27 @@ function atualizarFeedbackPotencia(numDigitado) {
   if (unidadeAtiva === 'kW') {
     // Solução 1: Usuário digitou >= 500 no modo kW (quase certamente pensou em Watts)
     if (numDigitado >= 500) {
-      const valorSugeridoKw = Number((numDigitado / 1000).toFixed(3));
-      const valorFormatadoKw = valorSugeridoKw.toString().replace('.', ',');
       const numFormatado = numDigitado.toLocaleString('pt-BR');
       feedback.innerHTML = `
         <div class="feedback-alert">
           <span class="alert-icon">⚠️</span>
           <div class="alert-content">
-            <strong>Você digitou ${numFormatado} kW (${(numDigitado * 1000).toLocaleString('pt-BR')} W).</strong>
-            <span>Se o seu valor original foi em Watts, você quis dizer <strong>${valorFormatadoKw} kW</strong>?</span>
-            <button type="button" class="btn-quick-fix" id="btnCorrigirParaKw">
-              ⚡ Sim, ajustar para ${valorFormatadoKw} kW
+            <strong>Você digitou ${numFormatado} com a unidade selecionada em kW.</strong>
+            <span>Se o valor que você informou é em Watts, altere a unidade para <strong>Watts (W)</strong> mantendo ${numFormatado} W.</span>
+            <button type="button" class="btn-quick-fix" id="btnMudarParaW">
+              ⚡ Mudar unidade para Watts (W)
             </button>
           </div>
         </div>
       `;
-      const btnFix = document.getElementById('btnCorrigirParaKw');
+      const btnFix = document.getElementById('btnMudarParaW');
       if (btnFix) {
         btnFix.addEventListener('click', () => {
-          input.value = valorFormatadoKw;
+          unidadeAtiva = 'W';
+          const selector = document.getElementById('unitSelector');
+          if (selector) selector.value = 'W';
+          sincronizarCustomSelect('unitSelector');
+          input.placeholder = 'Ex: 15000';
           calcularAba1();
         });
       }
@@ -164,23 +166,26 @@ function atualizarFeedbackPotencia(numDigitado) {
 
     // Solução 1: No modo Watts, digitou um valor muito baixo (< 100 W, ex: 15 ou 20)
     if (numDigitado < 100) {
-      const wSugerido = (numDigitado * 1000).toLocaleString('pt-BR');
       feedback.innerHTML = `
         <div class="feedback-alert">
           <span class="alert-icon">⚠️</span>
           <div class="alert-content">
-            <strong>${numDigitado} W é uma potência muito baixa para padrão de entrada.</strong>
-            <span>Se você pensou em ${numDigitado} kW, o valor correto é <strong>${wSugerido} W</strong>.</span>
-            <button type="button" class="btn-quick-fix" id="btnCorrigirParaW">
-              ⚡ Sim, ajustar para ${wSugerido} W (${numDigitado} kW)
+            <strong>Você digitou ${numDigitado} com a unidade selecionada em Watts (W).</strong>
+            <span>Para padrão de entrada esse valor é muito baixo. Se você pretendia calcular em kW, altere a unidade para <strong>kW</strong> mantendo ${numDigitado} kW.</span>
+            <button type="button" class="btn-quick-fix" id="btnMudarParaKw">
+              ⚡ Mudar unidade para kW
             </button>
           </div>
         </div>
       `;
-      const btnFix = document.getElementById('btnCorrigirParaW');
+      const btnFix = document.getElementById('btnMudarParaKw');
       if (btnFix) {
         btnFix.addEventListener('click', () => {
-          input.value = (numDigitado * 1000).toString();
+          unidadeAtiva = 'kW';
+          const selector = document.getElementById('unitSelector');
+          if (selector) selector.value = 'kW';
+          sincronizarCustomSelect('unitSelector');
+          input.placeholder = 'Ex: 15,5';
           calcularAba1();
         });
       }

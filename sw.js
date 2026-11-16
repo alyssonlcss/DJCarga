@@ -1,9 +1,9 @@
 /**
  * Service Worker - DJ Carga
- * Versão 1.5.2 - Disparo direto da instalação nativa pelo botão do rodapé
+ * Versão 1.5.3 - Ajuste da troca de unidade no aviso de potência e rodapé dinâmico visível
  */
 
-const CACHE_NAME = 'djcarga-v1.5.2';
+const CACHE_NAME = 'djcarga-v1.5.3';
 
 const STATIC_ASSETS = [
   '/',

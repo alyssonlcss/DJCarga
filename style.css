@@ -28,11 +28,13 @@ body {
   background: radial-gradient(circle at top, #e2e8f0 0%, #f1f5f9 55%, #f8fafc 100%);
   color: var(--text-main);
   margin: 0;
-  padding: 20px 15px;
+  padding: 16px;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
   min-height: 100vh;
+  min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -44,8 +46,13 @@ body {
   border: 1px solid rgba(15, 23, 42, 0.08);
   box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.07), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
   position: relative;
-  margin-top: 8px;
-  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  margin: auto 0;
+}
+
+main {
+  flex: 1 0 auto;
 }
 
 .header {
@@ -644,6 +651,7 @@ input[type="number"]:focus {
   flex-direction: column;
   gap: 8px;
   line-height: 1.5;
+  flex-shrink: 0;
 }
 
 .footer-actions {
@@ -821,43 +829,52 @@ input[type="number"]:focus {
 
   .header {
     border-radius: 0;
-    padding: calc(18px + env(safe-area-inset-top, 0px)) 16px 18px;
+    padding: calc(14px + env(safe-area-inset-top, 0px)) 16px 12px;
   }
 
   .header h1 {
-    font-size: 1.35rem;
+    font-size: 1.25rem;
   }
 
   .header p.subtitle {
-    font-size: 0.82rem;
+    font-size: 0.8rem;
+    margin: 4px 0 0 0;
   }
 
   main {
-    flex: 1;
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
   }
 
   .tabs {
-    margin: 12px 14px 0;
-    padding: 4px;
+    margin: 10px 14px 0;
+    padding: 3px;
   }
 
   .tab-button {
-    min-height: 44px;
-    padding: 8px 6px;
+    min-height: 40px;
+    padding: 6px 4px;
     font-size: 0.84rem;
   }
 
   .tab-content {
-    padding: 16px 14px 20px;
+    padding: 12px 14px 12px;
+    flex: 1 0 auto;
   }
 
   .form-row {
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
+    margin-bottom: 10px;
   }
 
   .form-group {
-    margin-bottom: 14px;
+    margin-bottom: 10px;
+  }
+
+  .form-row .form-group {
+    margin-bottom: 0;
   }
 
   /* Previne zoom involuntário no iOS Safari (exige font-size >= 16px em inputs) */
@@ -865,43 +882,43 @@ input[type="number"]:focus {
   input[type="number"],
   .custom-select-trigger {
     font-size: 16px;
-    padding: 12px 14px;
-    min-height: 48px;
+    padding: 11px 14px;
+    min-height: 46px;
   }
 
   .custom-select-drawer .custom-select-trigger {
     font-size: 0.9rem;
     padding: 0 12px;
-    min-height: 48px;
+    min-height: 46px;
   }
 
   .custom-select-option {
-    padding: 12px 14px;
-    min-height: 44px;
-    font-size: 0.94rem;
+    padding: 11px 14px;
+    min-height: 42px;
+    font-size: 0.92rem;
   }
 
   .limits-info {
     flex-direction: column;
     align-items: flex-start;
-    gap: 5px;
-    padding: 10px 12px;
-    margin-bottom: 14px;
+    gap: 3px;
+    padding: 8px 12px;
+    margin-bottom: 10px;
   }
 
   .limits-info span {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
   }
 
   .limits-info strong {
-    font-size: 0.85rem;
-    line-height: 1.4;
+    font-size: 0.82rem;
+    line-height: 1.35;
     word-break: break-word;
   }
 
   .result-box {
-    padding: 18px 14px;
-    margin-top: 14px;
+    padding: 16px 14px;
+    margin-top: 12px;
   }
 
   .sub-results {
@@ -929,8 +946,14 @@ input[type="number"]:focus {
 
   .footer-note {
     margin: 0 14px;
-    padding: 14px 0 calc(18px + env(safe-area-inset-bottom, 0px));
+    padding: 10px 0 calc(12px + env(safe-area-inset-bottom, 0px));
     font-size: 0.78rem;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .footer-actions {
+    margin-top: 4px;
   }
 }
 
