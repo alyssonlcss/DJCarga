@@ -66,10 +66,25 @@
                 </div>
             </div>
 
-            <!-- Faixa Normativa da Configuração Atual -->
-            <div class="limits-info" id="limitsInfo1">
-                <span>⚡ Limite da Categoria:</span>
-                <strong id="limitText1">0 < C ≤ 10,0 kW</strong>
+            <!-- Limites por Tipo de Ligação da Rede Selecionada -->
+            <div class="network-limits" id="networkLimits1">
+                <div class="network-limits-title">
+                    <span>⚡ Limites da Rede <strong id="lblRede1">Aérea</strong>:</span>
+                </div>
+                <div class="limits-table">
+                    <div class="limit-row active" id="rowMono1">
+                        <span class="limit-name">Monofásica:</span>
+                        <span class="limit-range" id="valMono1">0 < C ≤ 10,0 kW</span>
+                    </div>
+                    <div class="limit-row" id="rowBi1">
+                        <span class="limit-name">Bifásica:</span>
+                        <span class="limit-range" id="valBi1">10,1 < C ≤ 20,0 kW</span>
+                    </div>
+                    <div class="limit-row" id="rowTri1">
+                        <span class="limit-name">Trifásica:</span>
+                        <span class="limit-range" id="valTri1">10,1 < C ≤ 75,0 kW</span>
+                    </div>
+                </div>
             </div>
 
             <div id="resultadoBox1" class="result-box" aria-live="polite">
@@ -114,10 +129,25 @@
                 </div>
             </div>
 
-            <!-- Disjuntores Padronizados da Configuração Atual -->
-            <div class="limits-info" id="limitsInfo2">
-                <span>⚡ Disjuntores Padronizados:</span>
-                <strong id="limitText2">20A, 32A, 40A</strong>
+            <!-- Disjuntores por Tipo de Ligação da Rede Selecionada -->
+            <div class="network-limits" id="networkLimits2">
+                <div class="network-limits-title">
+                    <span>⚡ Disjuntores da Rede <strong id="lblRede2">Aérea</strong>:</span>
+                </div>
+                <div class="limits-table">
+                    <div class="limit-row active" id="rowMono2">
+                        <span class="limit-name">Monofásica:</span>
+                        <span class="limit-range" id="valMono2">20A, 32A, 40A</span>
+                    </div>
+                    <div class="limit-row" id="rowBi2">
+                        <span class="limit-name">Bifásica:</span>
+                        <span class="limit-range" id="valBi2">50A</span>
+                    </div>
+                    <div class="limit-row" id="rowTri2">
+                        <span class="limit-name">Trifásica:</span>
+                        <span class="limit-range" id="valTri2">25A a 100A</span>
+                    </div>
+                </div>
             </div>
 
             <div id="resultadoBox2" class="result-box" aria-live="polite">

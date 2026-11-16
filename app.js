@@ -65,27 +65,66 @@ function openTab(tabId) {
   if (targetBtn) targetBtn.classList.add('active');
 }
 
-// Atualiza o indicador dinâmico de limites da Aba 1
+// Atualiza os limites de cada tipo de rede e ligação na Aba 1
 function atualizarBadgeLimites1() {
-  const rede = document.getElementById('rede1')?.value;
-  const ligacao = document.getElementById('ligacao1')?.value;
-  const badgeText = document.getElementById('limitText1');
+  const rede = document.getElementById('rede1')?.value || 'aerea';
+  const ligacao = document.getElementById('ligacao1')?.value || 'monofasica';
 
-  if (rede && ligacao && LIMITES_NORMATIVOS[rede]?.[ligacao] && badgeText) {
-    badgeText.innerText = LIMITES_NORMATIVOS[rede][ligacao].label;
+  const lblRede = document.getElementById('lblRede1');
+  if (lblRede) {
+    lblRede.innerText = rede === 'aerea' ? 'Aérea' : 'Subterrânea';
   }
+
+  const limites = LIMITES_NORMATIVOS[rede];
+  if (!limites) return;
+
+  const valMono = document.getElementById('valMono1');
+  const valBi = document.getElementById('valBi1');
+  const valTri = document.getElementById('valTri1');
+
+  if (valMono) valMono.innerText = limites.monofasica.label;
+  if (valBi) valBi.innerText = limites.bifasica.label;
+  if (valTri) valTri.innerText = limites.trifasica.label;
+
+  const rowMono = document.getElementById('rowMono1');
+  const rowBi = document.getElementById('rowBi1');
+  const rowTri = document.getElementById('rowTri1');
+
+  rowMono?.classList.toggle('active', ligacao === 'monofasica');
+  rowBi?.classList.toggle('active', ligacao === 'bifasica');
+  rowTri?.classList.toggle('active', ligacao === 'trifasica');
 }
 
-// Atualiza o indicador dinâmico de disjuntores da Aba 2
+// Atualiza os disjuntores de cada tipo de rede e ligação na Aba 2
 function atualizarBadgeLimites2() {
-  const rede = document.getElementById('rede2')?.value;
-  const ligacao = document.getElementById('ligacao2')?.value;
-  const badgeText = document.getElementById('limitText2');
+  const rede = document.getElementById('rede2')?.value || 'aerea';
+  const ligacao = document.getElementById('ligacao2')?.value || 'monofasica';
 
-  if (rede && ligacao && LIMITES_NORMATIVOS[rede]?.[ligacao] && badgeText) {
-    const lista = LIMITES_NORMATIVOS[rede][ligacao].disjuntores.map(d => `${d}A`).join(', ');
-    badgeText.innerText = lista;
+  const lblRede = document.getElementById('lblRede2');
+  if (lblRede) {
+    lblRede.innerText = rede === 'aerea' ? 'Aérea' : 'Subterrânea';
   }
+
+  const limites = LIMITES_NORMATIVOS[rede];
+  if (!limites) return;
+
+  const valMono = document.getElementById('valMono2');
+  const valBi = document.getElementById('valBi2');
+  const valTri = document.getElementById('valTri2');
+
+  if (valMono) valMono.innerText = limites.monofasica.disjuntores.map(d => `${d}A`).join(', ');
+  if (valBi) valBi.innerText = limites.bifasica.disjuntores.map(d => `${d}A`).join(', ');
+  if (valTri) {
+    valTri.innerText = rede === 'aerea' ? '25A a 100A' : '25A a 125A';
+  }
+
+  const rowMono = document.getElementById('rowMono2');
+  const rowBi = document.getElementById('rowBi2');
+  const rowTri = document.getElementById('rowTri2');
+
+  rowMono?.classList.toggle('active', ligacao === 'monofasica');
+  rowBi?.classList.toggle('active', ligacao === 'bifasica');
+  rowTri?.classList.toggle('active', ligacao === 'trifasica');
 }
 
 // Conversor Watts para kW (precisão de até 3 casas decimais: 1 kW = 1.000 W)
