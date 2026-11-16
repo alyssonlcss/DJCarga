@@ -15,14 +15,14 @@ const REGRAS = [
   { rede: 'aerea', ligacao: 'trifasica', min: 21.0, max: 30.0, disjuntor: 40, cu: '3x10+10 mm²', al: '3x16+16 mm²', int: '21,1 < C ≤ 30,0' },
   { rede: 'aerea', ligacao: 'trifasica', min: 30.0, max: 37.0, disjuntor: 50, cu: '3x16+16 mm²', al: '3x25+25 mm²', int: '30,1 < C ≤ 37,0' },
   { rede: 'aerea', ligacao: 'trifasica', min: 37.0, max: 47.0, disjuntor: 63, cu: '3x16+16 mm²', al: '3x25+25 mm²', int: '37,1 < C ≤ 47,0' },
-  { rede: 'aerea', ligacao: 'trifasica', min: 47.0, max: 60.0, disjuntor: 80, cu: '3x35+54,5 mm²', al: '3x50+50 mm²', int: '47,1 < C ≤ 60,0' },
-  { rede: 'aerea', ligacao: 'trifasica', min: 60.0, max: 75.0, disjuntor: 100, cu: '3x35+54,5 mm²', al: '3x50+50 mm²', int: '60,1 < C ≤ 75,0' },
+  { rede: 'aerea', ligacao: 'trifasica', min: 47.0, max: 60.0, disjuntor: 80, cu: '3x35+35 mm²', al: '3x50+50 mm²', int: '47,1 < C ≤ 60,0' },
+  { rede: 'aerea', ligacao: 'trifasica', min: 60.0, max: 75.0, disjuntor: 100, cu: '3x35+35 mm²', al: '3x50+50 mm²', int: '60,1 < C ≤ 75,0' },
   { rede: 'subterranea', ligacao: 'monofasica', min: 0, max: 5.0, disjuntor: 20, cu: '10 mm²', al: '25 mm²', int: '0 < C ≤ 5,0' },
   { rede: 'subterranea', ligacao: 'monofasica', min: 5.0, max: 8.0, disjuntor: 32, cu: '10 mm²', al: '25 mm²', int: '5,1 < C ≤ 8,0' },
   { rede: 'subterranea', ligacao: 'monofasica', min: 8.0, max: 10.0, disjuntor: 40, cu: '10 mm²', al: '25 mm²', int: '8,1 < C ≤ 10,0' },
   { rede: 'subterranea', ligacao: 'monofasica', min: 10.0, max: 12.5, disjuntor: 50, cu: '16 mm²', al: '25 mm²', int: '10,1 < C ≤ 12,5' },
   { rede: 'subterranea', ligacao: 'monofasica', min: 12.5, max: 16.0, disjuntor: 63, cu: '16 mm²', al: '25 mm²', int: '12,51 < C ≤ 16,0' },
-  { rede: 'subterranea', ligacao: 'bifasica', min: 16.0, max: 20.0, disjuntor: 50, cu: '16 mm²', al: '25 mm²', int: '16,1 < C ≤ 20,0' },
+  { rede: 'subterranea', ligacao: 'bifasica', min: 10.0, max: 20.0, disjuntor: 50, cu: '16 mm²', al: '25 mm²', int: '10,1 < C ≤ 20,0' },
   { rede: 'subterranea', ligacao: 'trifasica', min: 16.0, max: 19.0, disjuntor: 25, cu: '16 mm²', al: '25 mm²', int: '16,1 < C ≤ 19,0' },
   { rede: 'subterranea', ligacao: 'trifasica', min: 19.0, max: 21.0, disjuntor: 32, cu: '16 mm²', al: '25 mm²', int: '19,1 < C ≤ 21,0' },
   { rede: 'subterranea', ligacao: 'trifasica', min: 21.0, max: 30.0, disjuntor: 40, cu: '16 mm²', al: '25 mm²', int: '21,1 < C ≤ 30,0' },
@@ -30,7 +30,7 @@ const REGRAS = [
   { rede: 'subterranea', ligacao: 'trifasica', min: 37.0, max: 47.0, disjuntor: 63, cu: '16 mm²', al: '25 mm²', int: '37,1 < C ≤ 47,0' },
   { rede: 'subterranea', ligacao: 'trifasica', min: 47.0, max: 60.0, disjuntor: 80, cu: '25 mm²', al: '35 mm²', int: '47,1 < C ≤ 60,0' },
   { rede: 'subterranea', ligacao: 'trifasica', min: 60.0, max: 75.0, disjuntor: 100, cu: '25 mm²', al: '50 mm²', int: '60,1 < C ≤ 75,0' },
-  { rede: 'subterranea', ligacao: 'trifasica', min: 75.0, max: 100.0, disjuntor: 125, cu: '50 mm²', al: '70 mm²', int: '75,1 < C ≤ 100,0' }
+  { rede: 'subterranea', ligacao: 'trifasica', min: 75.0, max: 100.0, disjuntor: 125, cu: '3x50+50 mm²', al: '3x70+70 mm²', int: '75,1 < C ≤ 100,0' }
 ];
 
 // Metadados normativos de limites e disjuntores por categoria
@@ -42,7 +42,7 @@ const LIMITES_NORMATIVOS = {
   },
   subterranea: {
     monofasica: { min: 0, max: 16.0, label: '0 < C ≤ 16,0 kW', disjuntores: [20, 32, 40, 50, 63] },
-    bifasica: { min: 16.0, max: 20.0, label: '16,1 < C ≤ 20,0 kW', disjuntores: [50] },
+    bifasica: { min: 10.0, max: 20.0, label: '10,1 < C ≤ 20,0 kW', disjuntores: [50] },
     trifasica: { min: 16.0, max: 100.0, label: '16,1 < C ≤ 100,0 kW', disjuntores: [25, 32, 40, 50, 63, 80, 100, 125] }
   }
 };
@@ -208,24 +208,27 @@ function calcularAba1() {
         detalheOrientacao = `A carga de ${cargaFormatada} kW ultrapassa o limite monofásico (16 kW). Recomendação: altere para "Trifásica" (atende até 100 kW).`;
       }
     }
-    // 5. Limites de ligação Bifásica
+    // 5. Limites de ligação Bifásica (10,1 a 20 kW em ambas as redes conforme Enel CE)
     else if (ligacao === 'bifasica') {
-      const minBifasica = rede === 'aerea' ? 10.0 : 16.0;
-      if (carga <= minBifasica) {
-        mensagemPrincipal = `Carga Abaixo do Mínimo Bifásico (${minBifasica} kW)`;
-        detalheOrientacao = `Para potências até ${minBifasica} kW em rede ${rede}, a norma padroniza o fornecimento através de ligação "Monofásica".`;
+      if (carga <= 10.0) {
+        mensagemPrincipal = 'Carga Abaixo do Mínimo Bifásico (10 kW)';
+        detalheOrientacao = rede === 'aerea'
+          ? `Para potências até 10 kW em rede aérea, a norma padroniza o fornecimento através de ligação "Monofásica".`
+          : `Para potências até 10 kW (e até 16 kW) em rede subterrânea, a norma padroniza o fornecimento preferencial através de ligação "Monofásica".`;
       } else if (carga > 20.0) {
         mensagemPrincipal = 'Máx: 20 kW na Ligação Bifásica';
         const tetoRede = rede === 'aerea' ? '75 kW' : '100 kW';
         detalheOrientacao = `O limite normativo da ligação bifásica é 20 kW. Para ${cargaFormatada} kW, migre para ligação "Trifásica" (atende até ${tetoRede} em rede ${rede}).`;
       }
     }
-    // 6. Limites de ligação Trifásica
+    // 6. Limites de ligação Trifásica (Mínimo: 10 kW na Aérea / 16 kW na Subterrânea)
     else if (ligacao === 'trifasica') {
       const minTrifasica = rede === 'aerea' ? 10.0 : 16.0;
       if (carga <= minTrifasica) {
         mensagemPrincipal = `Carga Baixa p/ Trifásica (Mín: ${minTrifasica} kW)`;
-        detalheOrientacao = `Para potências até ${minTrifasica} kW em rede ${rede}, a concessionária padroniza ligação "Monofásica" por economia e equilíbrio de carga.`;
+        detalheOrientacao = rede === 'aerea'
+          ? `Para potências até 10 kW em rede aérea, a concessionária padroniza ligação "Monofásica" por economia e equilíbrio de carga.`
+          : `Para potências até 16 kW em rede subterrânea, a concessionária padroniza ligação "Monofásica" (atende até 63A).`;
       }
     }
 

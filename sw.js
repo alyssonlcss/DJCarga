@@ -1,9 +1,9 @@
 /**
  * Service Worker - DJ Carga
- * Versão 1.1.2 - Suporte Offline Completo e Visual Refinado
+ * Versão 1.1.3 - Sincronização Normativa Enel CE (Anexos F e G)
  */
 
-const CACHE_NAME = 'djcarga-v1.1.2';
+const CACHE_NAME = 'djcarga-v1.1.3';
 
 const STATIC_ASSETS = [
   '/',
