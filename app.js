@@ -664,7 +664,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Gerenciamento de Instalação PWA
   let deferredPrompt = null;
   const modal = document.getElementById('installModal');
-  const btnInstall = document.getElementById('btnInstall');
   const btnCancel = document.getElementById('btnCancelInstall');
   const btnOpenInstall = document.getElementById('btnOpenInstallModal');
   const installInstructions = document.getElementById('installInstructions');
@@ -675,56 +674,47 @@ document.addEventListener('DOMContentLoaded', () => {
     btnOpenInstall.style.display = 'none';
   }
 
-  function abrirModalInstalacao() {
-    if (!modal) return;
-
-    if (deferredPrompt) {
-      if (installInstructions) installInstructions.style.display = 'none';
-      if (btnInstall) btnInstall.style.display = 'inline-block';
-    } else {
-      // Quando o evento automático do navegador está em cooldown ou em navegadores como Safari iOS
-      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-      const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-      if (installInstructions) {
-        if (isIOS) {
-          installInstructions.innerHTML = '📲 <strong>No iPhone / iPad:</strong><br>Toque no ícone de Compartilhar (quadrado com seta para cima) e escolha <strong>"Adicionar à Tela de Início"</strong>.';
-        } else if (isMobile) {
-          installInstructions.innerHTML = '📲 <strong>No Celular Android:</strong><br>Toque no menu de 3 pontos (⋮) no topo do navegador e selecione <strong>"Instalar aplicativo"</strong> ou <strong>"Adicionar à tela inicial"</strong>.';
-        } else {
-          installInstructions.innerHTML = '💻 <strong>No Computador:</strong><br>Clique no ícone de instalação (computador com seta para baixo) no canto direito da barra de endereços do navegador.';
-        }
-        installInstructions.style.display = 'block';
-      }
-      if (btnInstall) btnInstall.style.display = 'none';
-    }
-
-    modal.style.display = 'flex';
-  }
-
-  // Abertura manual acionada pelo botão do rodapé
-  if (btnOpenInstall) {
-    btnOpenInstall.addEventListener('click', () => {
-      abrirModalInstalacao();
-    });
-  }
-
-  // Captura o prompt de instalação sem abrir popups automáticos na tela inicial
+  // Captura o evento nativo de instalação do navegador sem abrir popups
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
   });
 
-  if (btnInstall) {
-    btnInstall.addEventListener('click', async () => {
+  // Exibe instruções manuais somente se o navegador não suportar o prompt automático (ex: iOS Safari)
+  function exibirInstrucoesManuais() {
+    if (!modal) return;
+
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+    if (installInstructions) {
+      if (isIOS) {
+        installInstructions.innerHTML = '📲 <strong>No iPhone / iPad:</strong><br>Toque no ícone de Compartilhar (quadrado com seta para cima) e selecione <strong>"Adicionar à Tela de Início"</strong>.';
+      } else if (isMobile) {
+        installInstructions.innerHTML = '📲 <strong>No Celular Android:</strong><br>Toque no menu de 3 pontos (⋮) no topo do navegador e selecione <strong>"Instalar aplicativo"</strong> ou <strong>"Adicionar à tela inicial"</strong>.';
+      } else {
+        installInstructions.innerHTML = '💻 <strong>No Computador:</strong><br>Clique no ícone de instalação (computador com seta para baixo) na barra de endereços do navegador.';
+      }
+      installInstructions.style.display = 'block';
+    }
+
+    modal.style.display = 'flex';
+  }
+
+  // Ao clicar no botão do rodapé: dispara a instalação nativa diretamente sem popup intermediário
+  if (btnOpenInstall) {
+    btnOpenInstall.addEventListener('click', async () => {
       if (deferredPrompt) {
-        if (modal) modal.style.display = 'none';
+        // Dispara direto a janela de instalação nativa do sistema/navegador
         deferredPrompt.prompt();
         const choice = await deferredPrompt.userChoice;
         if (choice && choice.outcome === 'accepted') {
-          if (btnOpenInstall) btnOpenInstall.style.display = 'none';
+          btnOpenInstall.style.display = 'none';
         }
         deferredPrompt = null;
+      } else {
+        // Para navegadores sem prompt nativo programável (ex: Safari no iOS)
+        exibirInstrucoesManuais();
       }
     });
   }
@@ -735,7 +725,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Permite fechar o modal clicando fora da caixa de diálogo
+  // Permite fechar o modal de instruções clicando fora da caixa
   if (modal) {
     modal.addEventListener('click', (e) => {
       if (e.target === modal) {

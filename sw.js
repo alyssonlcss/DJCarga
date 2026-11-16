@@ -1,9 +1,9 @@
 /**
  * Service Worker - DJ Carga
- * Versão 1.5.1 - Instalação manual sob demanda pelo rodapé (sem popup automático inicial)
+ * Versão 1.5.2 - Disparo direto da instalação nativa pelo botão do rodapé
  */
 
-const CACHE_NAME = 'djcarga-v1.5.1';
+const CACHE_NAME = 'djcarga-v1.5.2';
 
 const STATIC_ASSETS = [
   '/',
